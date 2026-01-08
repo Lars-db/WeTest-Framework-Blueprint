@@ -1,0 +1,28 @@
+{
+  "name": "wetest-framework-blueprint",
+  "version": "1.0.0",
+  "description": "A test automation framework blueprint using Playwright and Typescript",
+  "homepage": "https://github.com/Lars-db/WeTest-Framework-Blueprint#readme",
+  "bugs": {
+    "url": "https://github.com/Lars-db/WeTest-Framework-Blueprint/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lars-db/WeTest-Framework-Blueprint.git"
+  },
+  "license": "ISC",
+  "author": "Lars de Bruijn",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.3",
+    "dotenv": "^17.2.3"
+  }
+}
