@@ -35,10 +35,6 @@ export default [
         },
         rules: {
             ...playwright.configs['flat/recommended'].rules,
-            'playwright/await-async-events': 'error', // Ensure no missing awaits
-            'playwright/no-skipped-tests': 'warn', // Discourage skipped tests
-            'playwright/no-focused-tests': 'error', // Prevent focused tests
-            'playwright/no-test-prefixes': 'error', // Enforce consistent test naming
             ...tseslint.configs.recommended.rules,
             '@typescript-eslint/no-explicit-any': 'warn', // Discourage use of 'any
             '@typescript-eslint/no-unused-vars': 'error', // Ensure no unused variables

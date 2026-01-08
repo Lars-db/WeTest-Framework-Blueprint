@@ -1,5 +1,3 @@
-import { chromium } from '@playwright/test';
-
 async function globalTeardown() {
     console.log('Global teardown: Starting cleanup process...');
 
