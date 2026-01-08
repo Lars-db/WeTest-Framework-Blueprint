@@ -32,6 +32,7 @@
     "jiti": "^2.6.1"
   },
   "dependencies": {
-    "eslint": "^9.39.2"
+    "eslint": "^9.39.2",
+    "winston": "^3.19.0"
   }
 }

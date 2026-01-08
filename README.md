@@ -16,6 +16,8 @@ Presented at **WeTest Conference 2026** | [Visit the Conference](https://wetest.
 - [Running Tests](#running-tests)
 - [Configuration](#configuration)
 - [Framework Components](#framework-components)
+  - [Logging with Winston](#logging-with-winston)
+  - [Support Utilities](#support-utilities)
 - [Best Practices](#best-practices)
 - [Contributing](#contributing)
 - [License](#license)
@@ -201,6 +203,84 @@ dotenv.config();
 ---
 
 ## Framework Components
+
+### Logging with Winston
+
+The framework includes a production-grade **Winston logger** configured for enterprise test automation.
+
+#### Features
+- **Multiple transports**: Console output during tests + file persistence
+- **Custom log levels**: error, warn, info, http, debug, trace
+- **Automatic log rotation**: 10MB max file size, 5 files retained per transport
+- **JSON formatting**: Structured logging to files for parsing/analysis
+- **Color-coded console output**: Easy-to-read colored output during test execution
+- **Error stack traces**: Automatic capture of stack traces for debugging
+
+#### Basic Usage
+
+The logger is automatically injected as a fixture into all tests:
+
+```typescript
+import { test } from '../support/utils/fixtures/testFixture';
+
+test('Example test', async ({ page, logger }) => {
+  logger.info('Test started');
+  
+  await page.goto('/');
+  logger.debug('Page navigated successfully');
+  
+  // Perform test actions...
+  logger.info('Test completed');
+});
+```
+
+#### Available Log Levels
+
+| Level | Usage |
+|-------|-------|
+| `error` | Critical failures and exceptions |
+| `warn` | Warning conditions that don't stop execution |
+| `info` | General informational messages (default) |
+| `http` | HTTP request/response details |
+| `debug` | Detailed debugging information |
+| `trace` | Most verbose, all internal details |
+
+#### Controlling Log Output
+
+Use the `LOG_LEVEL` environment variable to control console verbosity:
+
+```bash
+# Default: info (only shows info, warn, error)
+npm test
+
+# Show debug messages
+LOG_LEVEL=debug npm test
+
+# Show all messages including trace
+LOG_LEVEL=trace npm test
+
+# Only errors
+LOG_LEVEL=error npm test
+```
+
+#### Log Files
+
+Logs are written to `test-results/logs/`:
+- **`combined.log`**: All messages at trace level and above
+- **`error.log`**: Error messages only (useful for quick failure analysis)
+
+#### Custom Logger Creation
+
+For specialized scenarios, create a named logger:
+
+```typescript
+import { createLogger } from '../support/utils/logger';
+
+const customLogger = createLogger('MyCustomService');
+customLogger.info('Custom logger message');
+```
+
+---
 
 ### Support Utilities
 
