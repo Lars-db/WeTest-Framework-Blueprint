@@ -20,7 +20,8 @@
   "scripts": {
     "test": "playwright test",
     "build": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generate:api": "orval --config orval.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.57.0",
@@ -33,6 +34,7 @@
   },
   "dependencies": {
     "eslint": "^9.39.2",
+    "orval": "^7.17.2",
     "winston": "^3.19.0"
   }
 }
