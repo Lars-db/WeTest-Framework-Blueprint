@@ -1,14 +1,18 @@
 import { type Locator, Page } from '@playwright/test';
+import { getTranslations } from '../utils/translations';
 
 export class LoginPage {
     readonly page: Page;
     readonly usernameInput: Locator;
     readonly passwordInput: Locator;
 
-    constructor(page: Page) {
+    constructor(page: Page, language: string = process.env.LANGUAGE || 'en') {
         this.page = page;
-        this.usernameInput = page.locator('#username');
-        this.passwordInput = page.locator('#password');
+        const t = getTranslations(language).loginPage;
+        
+                
+        this.usernameInput = page.getByRole('textbox', { name: t.usernameInput });
+        this.passwordInput = page.getByRole('textbox', { name: t.passwordInput });
     }
 }
 
