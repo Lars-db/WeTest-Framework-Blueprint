@@ -1,0 +1,76 @@
+name: Build Playwright Framework
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/**
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  NODE_VERSION: 20
+  ARTIFACT_NAME: playwright-deps
+
+jobs:
+  build:
+    name: Build, Lint & SonarQube
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------
+      # Checkout
+      # -----------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Node.js
+      # -----------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # -----------------------------
+      # Install dependencies
+      # -----------------------------
+      - name: Install dependencies
+        run: npm ci
+
+      # -----------------------------
+      # Install Playwright browsers
+      # -----------------------------
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # -----------------------------
+      # Lint
+      # -----------------------------
+      - name: Lint check
+        run: npm run lint
+
+      # -----------------------------
+      # Build
+      # -----------------------------
+      - name: Build project
+        run: npm run build
+
+      # -----------------------------
+      # SonarQube Scan
+      # -----------------------------
+      - name: SonarQube Scan
+
+      # -----------------------------
+      # Publish dependencies artifact
+      # -----------------------------
+      - name: Publish node_modules artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: node_modules
+          retention-days: 3
