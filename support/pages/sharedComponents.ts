@@ -1,4 +1,5 @@
 import { type Locator, Page } from '@playwright/test';
+import { getTranslations } from '../utils/translations';
 
 // Define a class for shared components (like header, footer, etc.)
 export class SharedComponents {
@@ -6,10 +7,12 @@ export class SharedComponents {
     readonly header: Locator;
     readonly footer: Locator;
 
-    constructor(page: Page) {
+    constructor(page: Page, language: string = process.env.LANGUAGE || 'en') {
         this.page = page;
-        this.header = page.locator('header');
-        this.footer = page.locator('footer');
+        const t = getTranslations(language).sharedComponents;
+
+        this.header = page.getByRole('menuitem', { name: t.header });
+        this.footer = page.getByRole('menuitem', { name: t.footer });
     }
 }
 
