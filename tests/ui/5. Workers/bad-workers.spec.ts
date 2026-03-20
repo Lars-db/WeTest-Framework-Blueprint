@@ -1,6 +1,4 @@
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
 
 /**
  * BAD WORKERS EXAMPLE
@@ -18,28 +16,18 @@ import path from 'path';
  *    that are NOT isolated will almost certainly cause flakiness in CI.
  */
 
-const authFile = path.join(__dirname, '../../.auth/user.json');
-
 // WARNING: Running these tests in parallel will cause race conditions on the shared user profile.
 test.describe.configure({ mode: 'parallel' });
 
 test.describe('Profile Update (Parallel Conflict)', () => {
 
-    test.use({ storageState: fs.existsSync(authFile) ? authFile : undefined });
-
     test.beforeEach(async ({ page }) => {
-        if (!fs.existsSync(authFile)) {
-            await page.goto('/auth/login');
-            await page.locator('[data-test="email"]').fill('customer@practicesoftwaretesting.com');
-            await page.locator('[data-test="password"]').fill('welcome01');
-            await page.locator('[data-test="login-submit"]').click();
-            await expect(page).toHaveURL(/account/);
-            const authDir = path.dirname(authFile);
-            if (!fs.existsSync(authDir)) {
-                fs.mkdirSync(authDir, { recursive: true });
-            }
-            await page.context().storageState({ path: authFile });
-        }
+        // Both workers log in as the same user to demonstrate the shared-state race condition.
+        await page.goto('/auth/login');
+        await page.locator('[data-test="email"]').fill('customer@practicesoftwaretesting.com');
+        await page.locator('[data-test="password"]').fill('welcome01');
+        await page.locator('[data-test="login-submit"]').click();
+        await expect(page).toHaveURL(/account/);
         await page.goto('http://localhost:4200/account/profile');
     });
 

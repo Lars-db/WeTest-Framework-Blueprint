@@ -43,7 +43,7 @@ test.describe('Search functionality (Parallel Safe)', () => {
         await page.getByLabel('ForgeFlex Tools').check();
         
         // Verify that the results container appeared or updated
-        await expect(page.locator('.card')).toBeVisible();
+        await expect(page.locator('.card').first()).toBeVisible();
     });
 
 });
