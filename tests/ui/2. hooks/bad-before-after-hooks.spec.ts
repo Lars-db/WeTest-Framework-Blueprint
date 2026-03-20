@@ -33,7 +33,7 @@ test.describe('Login - Bad Hooks', () => {
     await page.locator('.btnSubmit').click();
     
     // Vague locator and assertion
-    const error = await page.locator('.alert').textContent();
+    const error = page.locator('.alert');
     expect(error).toBeTruthy();
   });
 
