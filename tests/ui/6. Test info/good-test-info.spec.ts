@@ -1,11 +1,48 @@
-/*
+import { test, expect } from '@playwright/test';
 
-    Leverage pushing variables to the test info annotations in order avoid race conditions when running tests in parallel.
+/**
+ * GOOD TEST INFO EXAMPLE
+ * 
+ * This test demonstrates a proper use of the `testInfo` object to enhance test reporting
+ * and handle environmental differences or retries in a clean way.
+ * 
+ * Why this is a GOOD example:
+ * 1. Attaching Contextual Metadata: It uses `testInfo.annotations` to add information 
+ *    that helps identify the test's purpose or related ticket in reports.
+ * 2. Conditional Logic based on Retries: It uses `testInfo.retry` to log a special message 
+ *    or perform extra debug actions only when a test is failing and being retried.
+ * 3. Dynamic Artifact Naming: It uses `testInfo.outputPath()` to ensure that any 
+ *    manually created screenshots or files are stored in the correct directory.
+ * 4. Separation of Concerns: The `testInfo` usage is for observability and test management,
+ *    not for driving the core business logic of the test itself.
+ */
 
-    This happens when you cannot define variables globally for the entire suite, because both tests will try to read/write the same variable at the same time.
-    You might define such variables globally because you want to reference them in hooks like afterEach of afterAll. 
-    For example: a randomly generated user ID that you create in a test and want to delete in an afterEach hook.
+test('Search for products with debug info', async ({ page }, testInfo) => {
+    // 1. Add annotations for better reporting (e.g., linking to a Jira ticket)
+    testInfo.annotations.push({ type: 'test-id', description: 'PROD-123' });
+    testInfo.annotations.push({ type: 'feature', description: 'Search' });
 
-    By pushing the variable to the test info annotations, each test will have its own copy of the variable, avoiding race conditions.
+    await page.goto('/');
 
-*/
+    // 2. Log retry attempt if applicable
+    if (testInfo.retry > 0) {
+        console.log(`[DEBUG] This is retry attempt #${testInfo.retry} for test: ${testInfo.title}`);
+    }
+
+    // 3. Perform the test actions using stable locators (data-test)
+    const searchQuery = page.getByTestId('search-query');
+    const searchSubmit = page.getByTestId('search-submit');
+
+    await searchQuery.fill('Hammer');
+    await searchSubmit.click();
+
+    // 4. Verification
+    const productNames = page.getByTestId('product-name');
+    await expect(productNames).toContainText(['Hammer'], { ignoreCase: true });
+
+    // 5. Manually attach a screenshot if the test reaches this point (e.g., for visual audit)
+    // We use testInfo.outputPath to get a safe path for the screenshot
+    const screenshotPath = testInfo.outputPath('search-results.png');
+    await page.screenshot({ path: screenshotPath });
+    await testInfo.attach('Final Search Results', { path: screenshotPath, contentType: 'image/png' });
+});
