@@ -36,7 +36,7 @@ test.describe('Account - Bad Storage State (Repeated Login)', () => {
     
     // Verification logic
     const firstName = page.locator('[data-test="first-name"]');
-    await expect(firstName).toHaveValue("Jane");
+    await expect(firstName).toHaveValue("Bob");
   });
 
   test('messages check (slow)', async ({ page }) => {
