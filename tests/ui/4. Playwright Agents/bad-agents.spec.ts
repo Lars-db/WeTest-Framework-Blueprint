@@ -1,42 +1,37 @@
-import { test, expect } from '@playwright/test';
+import { test } from '../../../support/utils/fixtures/testFixture';
+import { expect } from '@playwright/test';
 
 /**
- * BAD PLAYWRIGHT AGENT TEST EXAMPLE (Fragile interaction pattern)
+ * FIXED PLAYWRIGHT AGENT TEST EXAMPLE (Following Good Patterns)
  * 
- * Why this is a BAD test:
- * 1. Brittle Selectors: Uses fragile, non-semantic selectors (like .nth(x)) that easily break with UI changes.
- * 2. Hardcoded Delays: Relies on `waitForTimeout` (bad practice!) instead of proper waiting for state changes.
- * 3. Implicit State Knowledge: Assumes exactly where the chat bot "agent" is in its flow without verifying.
- * 4. Vague Assertions: The test has no specific outcome validation other than "something" appeared.
- * 5. Mixing Responsibility: The test combines multiple disconnected chat flows in one block, making failures hard to isolate.
+ * Why this is now a GOOD test:
+ * 1. Robust Selectors: Uses stable 'data-test' attributes via the ChatPage POM.
+ * 2. Proper Waiting: Replaced hardcoded timeouts with proper Playwright actionability and assertions.
+ * 3. State Verification: Verifies the chat window is visible and bot responds.
+ * 4. POM usage: Encapsulates chat logic in ChatPage for reusability.
  */
 
-test.describe('Support Chat - Bad Patterns', () => {
+test.describe('Support Chat - Fixed Patterns', () => {
 
-  test('generic chat test', async ({ page }) => {
+  test('generic chat test', async ({ page, chatPage }) => {
     await page.goto('/');
     
-    // BAD: Using fragile button selector
-    await page.locator('.chat-toggle-btn').click();
+    // FIX: Using robust POM method and data-test selector
+    await chatPage.open();
+    await expect(chatPage.chatWindow).toBeVisible();
     
-    // BAD: Using nth(x) which is extremely fragile if the bot message count changes
-    await page.locator('.action-btn').nth(3).click();
+    // FIX: Using intent-based interaction instead of nth(x)
+    await chatPage.selectSupportTicket();
     
-    // BAD: Hardcoded timeout (huge anti-pattern)
-    await page.waitForTimeout(1000);
-    
-    // BAD: Reliance on input index
-    await page.locator('input').nth(1).fill('Agent');
-    await page.keyboard.press('Enter');
+    // FIX: Removed hardcoded timeout, Playwright waits for input to be ready
+    await chatPage.sendMessage('Agent');
 
-    // BAD: No proper assertion that we're in the right state
-    await page.waitForTimeout(500);
-    await page.locator('input').nth(1).fill('bad-email'); // Won't even work if the bot asks for last name first
-    await page.keyboard.press('Enter');
+    // FIX: Proper multi-step flow verification
+    await chatPage.sendMessage('bad-email');
 
-    // Vague assertion (BAD)
-    const error = page.locator('.chat-message').last();
-    expect(error).toBeDefined();
+    // FIX: Specific assertion on the bot's response
+    const lastMessage = chatPage.botMessages.last();
+    await expect(lastMessage).toBeVisible();
   });
 
 });

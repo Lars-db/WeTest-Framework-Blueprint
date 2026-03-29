@@ -3,6 +3,7 @@ import { AssertionHelper } from '../helpers/assertionHelper';
 import { SharedComponents } from '../../pages/sharedComponents';
 import { HomePage } from '../../pages/homePage';
 import { LoginPage } from '../../pages/loginPage';
+import { ChatPage } from '../../pages/chatPage';
 import { createLogger } from '../logger';
 import type { Logger } from 'winston';
 
@@ -13,6 +14,7 @@ export type CombinedFixtures = {
     sharedComponents: SharedComponents;
     homePage: HomePage;
     loginPage: LoginPage;
+    chatPage: ChatPage;
     logger: Logger;
 };
 
@@ -38,6 +40,10 @@ const test = baseTest.extend<CombinedFixtures>({
     loginPage: async ({ page }, use) => {
         const loginPage = new LoginPage(page);
         await use(loginPage);
+    },
+    chatPage: async ({ page }, use) => {
+        const chatPage = new ChatPage(page);
+        await use(chatPage);
     },
     logger: async ({ }, use) => {
         const logger = createLogger();
