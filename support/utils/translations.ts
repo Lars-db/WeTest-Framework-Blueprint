@@ -3,6 +3,10 @@ export interface ElementTranslations {
         usernameInput: string;
         passwordInput: string;
     };
+    homePage: {
+        searchQueryInput: string;
+        searchSubmitButton: string;
+    };
     sharedComponents: {
         header: string;
         footer: string;
@@ -15,6 +19,10 @@ export const translations: Record<string, ElementTranslations> = {
             usernameInput: 'Username',
             passwordInput: 'Password',
         },
+        homePage: {
+            searchQueryInput: 'Search',
+            searchSubmitButton: 'Search',
+        },
         sharedComponents: {
             header: 'Header',
             footer: 'Footer',
@@ -24,6 +32,10 @@ export const translations: Record<string, ElementTranslations> = {
         loginPage: {
             usernameInput: 'Όνομα χρήστη',
             passwordInput: 'Κωδικός πρόσβασης',
+        },
+        homePage: {
+            searchQueryInput: 'Αναζήτηση',
+            searchSubmitButton: 'Αναζήτηση',
         },
         sharedComponents: {
             header: 'Κεφαλίδα',
