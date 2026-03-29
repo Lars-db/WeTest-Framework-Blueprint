@@ -24,3 +24,7 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+# Playwright reports
+/test-results/
+/playwright-report/

@@ -1,0 +1,118 @@
+// Copyright (c) 2024-2026 Testsmith. All rights reserved.
+// See LICENSE for details.
+
+import {Component, inject, OnInit} from '@angular/core';
+import {CartService} from "../../_services/cart.service";
+import {CustomerAccountService} from "../../shared/customer-account.service";
+import {ToastrService} from "ngx-toastr";
+import {DecimalPipe, NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {ArchwizardModule} from "@y3krulez/angular-archwizard";
+import {TranslocoDirective} from "@jsverse/transloco";
+import {GaService} from "../../_services/ga.service";
+import {FormsModule} from "@angular/forms";
+
+@Component({
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  imports: [
+    NgClass,
+    DecimalPipe,
+    FaIconComponent,
+    ArchwizardModule,
+    TranslocoDirective,
+    FormsModule
+  ],
+  styleUrls: ['./cart.component.css']
+})
+export class CartComponent implements OnInit {
+  private cartService = inject(CartService);
+  private toastr = inject(ToastrService);
+  private customerAccountService = inject(CustomerAccountService);
+  private gaService = inject(GaService);
+
+  cart: any;
+  isLoggedIn: boolean = false;
+  discount: number = 0;
+  total: number = 0;
+  subtotal: number = 0;
+
+  ngOnInit(): void {
+    this.fetchCartItems();
+    this.isLoggedIn = this.customerAccountService.isLoggedIn();
+  }
+
+  fetchCartItems(): void {
+    this.cartService.getCart().subscribe(cart => {
+      this.cart = cart;
+      this.total = this.calculateTotal(cart.cart_items);
+      this.subtotal = this.total;
+      this.discount = this.calculateDiscount(cart.additional_discount_percentage)
+    });
+  }
+
+  updateQuantity(event: Event, item: any): void {
+    let quantity = item.quantity;
+
+    // Validate the quantity
+    if (isNaN(quantity) || quantity < 1) {
+      quantity = 1;
+      item.quantity = quantity;
+    } else if (quantity > 999999999) {
+      quantity = 999999999;
+      item.quantity = quantity;
+    }
+
+    if (quantity >= 1 && quantity <= 999999999) {
+      this.cartService.replaceQuantity(item.product.id, quantity).subscribe({
+        next: () => {
+          this.fetchCartItems();
+          this.toastr.success('Product quantity updated.', null, { progressBar: true });
+        },
+        error: (response) => {
+          this.toastr.error(response.error.message, null, { progressBar: true });
+        }
+      });
+    }
+  }
+
+  delete(id: number): void {
+    this.cartService.deleteItem(id).subscribe(() => {
+      this.fetchCartItems();
+      this.toastr.success('Product deleted.', null, {progressBar: true});
+    });
+  }
+
+  private calculateTotal(items: any[]): number {
+    return items.reduce((sum, cartItem) => {
+      const quantity = cartItem.quantity || 0;
+      const price = cartItem.discount_percentage ? cartItem.discounted_price : cartItem.product?.price || 0;
+      return sum + (quantity * price);
+    }, 0);
+  }
+
+  private calculateDiscount(percentage: number): number {
+    // Calculate the discount amount
+    const discountAmount = this.total * (percentage / 100);
+
+    // Calculate the discounted price
+    this.total = this.total - discountAmount;
+
+    return discountAmount;
+  }
+
+  beginCheckout(): void {
+    if (!this.cart?.cart_items?.length) return;
+
+    const items = this.cart.cart_items.map((cartItem: any) => ({
+      item_id: cartItem.product.id,
+      item_name: cartItem.product.name,
+      item_category: cartItem.product.category?.name || 'Unknown',
+      item_brand: cartItem.product.brand?.name || 'Unknown',
+      price: cartItem.discount_percentage ? cartItem.discounted_price : cartItem.product.price,
+      quantity: cartItem.quantity
+    }));
+
+    this.gaService.trackBeginCheckout('USD', this.total, items);
+  }
+}
