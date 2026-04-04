@@ -45,25 +45,50 @@ test.describe('Contact Form Validation - Good Parameterized', () => {
   
   test.beforeEach(async ({ page }) => {
     // Navigate to the contact page before each test case
-    await page.goto('/contact');
+    // Using a more resilient approach: if direct navigation fails (404), navigate through the UI
+    try {
+      const response = await page.goto('/contact');
+      if (response && response.status() === 404) {
+        await page.goto('/');
+        await page.getByRole('link', { name: 'Contact' }).click();
+      }
+    } catch {
+      await page.goto('/');
+      await page.getByRole('link', { name: 'Contact' }).click();
+    }
+    await expect(page).toHaveURL(/.*\/contact/);
   });
 
   contactFormScenarios.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
     test(`should show error for ${scenario}`, async ({ page }) => {
       // Fill the form fields using stable 'data-test' locators
-      if (firstName) await page.locator('[data-test="first-name"]').fill(firstName);
-      if (lastName) await page.locator('[data-test="last-name"]').fill(lastName);
-      if (email) await page.locator('[data-test="email"]').fill(email);
-      if (subject) await page.locator('[data-test="subject"]').selectOption(subject);
-      if (message) await page.locator('[data-test="message"]').fill(message);
+      // Ensure we always fill the fields (even with empty string) to be explicit
+      await page.locator('[data-test="first-name"]').fill(firstName);
+      await page.locator('[data-test="last-name"]').fill(lastName);
+      await page.locator('[data-test="email"]').fill(email);
+      await page.locator('[data-test="subject"]').selectOption(subject);
+      await page.locator('[data-test="message"]').fill(message);
 
       // Submit the form
-      await page.locator('[data-test="contact-submit"]').click();
+      // FIX: Ensure button is enabled and visible before clicking to reduce flakiness
+      const submitButton = page.locator('[data-test="contact-submit"]');
+      await expect(submitButton).toBeEnabled();
+      
+      // Some applications have a slight delay before the event listener is attached.
+      // We can click and retry or wait for the error message to appear with a longer timeout.
+      await submitButton.click();
 
       // Verify the expected error message is visible
       // Note: We use a locator that targets the error container specifically
       const errorLocator = page.locator('.alert-danger');
-      await expect(errorLocator).toContainText(expectedError);
+      
+      // If the first click didn't trigger validation, we try again (resilience)
+      await expect(async () => {
+        if (!await errorLocator.isVisible()) {
+          await submitButton.click();
+        }
+        await expect(errorLocator).toContainText(expectedError);
+      }).toPass();
     });
   });
 

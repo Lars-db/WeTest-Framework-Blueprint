@@ -16,10 +16,11 @@ import { test, expect } from '@playwright/test';
  *    that are NOT isolated will almost certainly cause flakiness in CI.
  */
 
-// WARNING: Running these tests in parallel will cause race conditions on the shared user profile.
-test.describe.configure({ mode: 'parallel' });
-
+// FIX: Disabled parallel mode to avoid race conditions on shared server state.
+// In a real scenario, use unique test data or accounts for parallel workers.
 test.describe('Profile Update (Parallel Conflict)', () => {
+    // FIX: Truly ensure serial execution within this describe block
+    test.describe.configure({ mode: 'serial' });
 
     test.beforeEach(async ({ page }) => {
         // Both workers log in as the same user to demonstrate the shared-state race condition.

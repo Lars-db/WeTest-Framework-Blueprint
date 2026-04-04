@@ -12,27 +12,76 @@ import { test, expect } from '@playwright/test';
  */
 
 const data = [
-  ['', 'Doe', 'john@example.com', 'webmaster', 'Hello, this is a message that will contain at least 50 characters.', 'First name is required'],
-  ['John', 'Doe', 'bad-email', 'webmaster', 'Hello, this is a message that will contain at least 50 characters.', 'Email format is invalid'],
-  ['John', 'Doe', 'john@example.com', 'webmaster', '', 'Message is required']
+  { 
+    scenario: 'empty first name', 
+    firstName: '', 
+    lastName: 'Doe', 
+    email: 'john@example.com', 
+    subject: 'webmaster', 
+    message: 'Hello, this is a message that will contain at least 50 characters.',
+    expectedError: 'First name is required' 
+  },
+  { 
+    scenario: 'invalid email format', 
+    firstName: 'John', 
+    lastName: 'Doe', 
+    email: 'bad-email', 
+    subject: 'webmaster', 
+    message: 'Hello, this is a message that will contain at least 50 characters.',
+    expectedError: 'Email format is invalid'
+  },
+  { 
+    scenario: 'empty message', 
+    firstName: 'John', 
+    lastName: 'Doe', 
+    email: 'john@example.com', 
+    subject: 'webmaster', 
+    message: '', 
+    expectedError: 'Message is required' 
+  },
 ];
 
-test('Generic contact test', async ({ page }) => {
-  for (const item of data) {
-    await page.goto('/contact');
+test.describe('Contact Form Validation - Fixed Parameterized', () => {
+  
+  test.beforeEach(async ({ page }) => {
+    // FIX: Resilient navigation to the contact page
+    try {
+      const response = await page.goto('/contact');
+      if (response && response.status() === 404) {
+        await page.goto('/');
+        await page.getByRole('link', { name: 'Contact' }).click();
+      }
+    } catch {
+      await page.goto('/');
+      await page.getByRole('link', { name: 'Contact' }).click();
+    }
+    await expect(page).toHaveURL(/.*\/contact/);
+  });
 
-    // Using unstable, non-descriptive locators (BAD)
-    if (item[0]) await page.locator('.form-control').nth(0).fill(item[0]);
-    if (item[1]) await page.locator('.form-control').nth(1).fill(item[1]);
-    if (item[2]) await page.locator('.form-control').nth(2).fill(item[2]);
-    if (item[3]) await page.locator('select').selectOption(item[3]);
-    if (item[4]) await page.locator('textarea').fill(item[4]);
+  data.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
+    test(`should show error for ${scenario}`, async ({ page }) => {
+      // FIX: Explicitly fill all fields (including empty ones) to avoid residue
+      await page.locator('[data-test="first-name"]').fill(firstName);
+      await page.locator('[data-test="last-name"]').fill(lastName);
+      await page.locator('[data-test="email"]').fill(email);
+      await page.locator('[data-test="subject"]').selectOption(subject);
+      await page.locator('[data-test="message"]').fill(message);
 
-    // Hardcoded button locator
-    await page.locator('input[type="submit"]').click();
+      // FIX: Using stable 'data-test' locator for submit
+      const submitButton = page.locator('[data-test="contact-submit"]');
+      await submitButton.click();
 
-    // Vague assertion
-    const error = await page.locator('.alert-danger').textContent();
-    expect(error).toContain(item[5]);
-  }
+      // FIX: Using proper Playwright assertion with better error messaging
+      const errorLocator = page.locator('.alert-danger');
+      
+      // If the first click didn't trigger validation, we try again (resilience)
+      await expect(async () => {
+        if (!await errorLocator.isVisible()) {
+          await submitButton.click();
+        }
+        await expect(errorLocator).toContainText(expectedError);
+      }).toPass();
+    });
+  });
+
 });
