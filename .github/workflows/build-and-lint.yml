@@ -31,3 +31,34 @@ jobs:
 
       - name: Run linting checks
         run: npm run lint
+
+      - name: Spin up Docker services
+        run: docker compose up -d
+        env:
+          SPRINT: sprint5
+
+      - name: Migrate and seed database
+        run: |
+          # Wait for database to be ready
+          echo "Waiting for database..."
+          for i in {1..30}; do
+            if docker compose exec -T mariadb mysqladmin ping -h"localhost" --silent; then
+              echo "Database is up!"
+              break
+            fi
+            echo "Waiting ($i/30)..."
+            sleep 2
+          done
+          echo "Running migrations..."
+          docker compose exec -T laravel-api php artisan migrate:fresh --seed
+        env:
+          SPRINT: sprint5
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm test
+        env:
+          SPRINT: sprint5
+          CI: true
