@@ -14,8 +14,8 @@ export class LoginPage {
         
         this.usernameInput = page.getByRole('textbox', { name: t.usernameInput });
         this.passwordInput = page.getByRole('textbox', { name: t.passwordInput });
-        this.loginButton = page.getByTestId('login-submit');
-        this.loginError = page.getByTestId('login-error');
+        this.loginButton = page.getByRole('button', { name: t.loginSubmitButton });
+        this.loginError = page.getByRole('alert').filter({ hasText: t.loginError });
     }
 
     async enterLoginCredentials(username: string, password: string) {

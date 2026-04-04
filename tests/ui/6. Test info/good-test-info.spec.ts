@@ -9,8 +9,8 @@ import { test, expect } from '@playwright/test';
  * Why this is a GOOD example:
  * 1. Attaching Contextual Metadata: It uses `testInfo.annotations` to add information 
  *    that helps identify the test's purpose or related ticket in reports.
- * 2. Conditional Logic based on Retries: It uses `testInfo.retry` to log a special message 
- *    or perform extra debug actions only when a test is failing and being retried.
+ * 2. Using Retry Info: It uses `testInfo.retry` to log the current attempt 
+ *    or perform extra debug actions in a way that respects linting rules.
  * 3. Dynamic Artifact Naming: It uses `testInfo.outputPath()` to ensure that any 
  *    manually created screenshots or files are stored in the correct directory.
  * 4. Separation of Concerns: The `testInfo` usage is for observability and test management,
@@ -25,9 +25,9 @@ test('Search for products with debug info', async ({ page }, testInfo) => {
     await page.goto('/');
 
     // 2. Log retry attempt if applicable
-    if (testInfo.retry > 0) {
-        console.log(`[DEBUG] This is retry attempt #${testInfo.retry} for test: ${testInfo.title}`);
-    }
+    // We use a console.log that incorporates the retry number directly,
+    // avoiding a conditional inside the test block.
+    console.log(`[DEBUG] Current attempt: #${testInfo.retry} for test: ${testInfo.title}`);
 
     // 3. Perform the test actions using stable locators (data-test)
     const searchQuery = page.getByTestId('search-query');

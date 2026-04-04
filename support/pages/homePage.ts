@@ -1,4 +1,5 @@
 import { type Locator, Page } from '@playwright/test';
+import { getTranslations } from '../utils/translations';
 
 export class HomePage {
     readonly page: Page;
@@ -9,10 +10,11 @@ export class HomePage {
 
     constructor(page: Page, language: string = process.env.LANGUAGE || 'en') {
         this.page = page;
+        const t = getTranslations(language).homePage;
 
-        this.searchInput = page.getByTestId('search-query');
-        this.searchButton = page.getByTestId('search-submit');
-        this.signInLink = page.getByTestId('nav-sign-in');
+        this.searchInput = page.getByRole('textbox', { name: t.searchQueryInput });
+        this.searchButton = page.getByRole('button', { name: t.searchSubmitButton });
+        this.signInLink = page.getByRole('link', { name: t.signInLink });
         this.productNames = page.getByTestId('product-name');
     }
 

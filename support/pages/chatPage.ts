@@ -1,4 +1,5 @@
 import { type Locator, Page } from '@playwright/test';
+import { getTranslations } from '../utils/translations';
 
 export class ChatPage {
     readonly page: Page;
@@ -12,17 +13,19 @@ export class ChatPage {
     readonly backToMenuButton: Locator;
     readonly botMessages: Locator;
 
-    constructor(page: Page) {
+    constructor(page: Page, language: string = process.env.LANGUAGE || 'en') {
         this.page = page;
-        this.toggleButton = page.locator('[data-test="chat-toggle"]');
-        this.chatWindow = page.locator('[data-test="chat-window"]');
-        this.supportTicketButton = page.locator('[data-test="chat-action-support-ticket"]');
-        this.chatInput = page.locator('[data-test="chat-input"]');
-        this.sendButton = page.locator('[data-test="chat-send"]');
-        this.selectSubjectButton = page.locator('[data-test="chat-action-select-subject"]');
-        this.skipAttachmentButton = page.locator('[data-test="chat-action-skip-attachment"]');
-        this.backToMenuButton = page.locator('[data-test="chat-action-back-to-menu"]');
-        this.botMessages = page.locator('.bot-message');
+        const t = getTranslations(language).chatPage;
+
+        this.toggleButton = page.getByRole('button', { name: t.toggleButton });
+        this.chatWindow = page.getByRole('dialog', { name: t.chatWindow });
+        this.supportTicketButton = page.getByRole('button', { name: t.supportTicketButton });
+        this.chatInput = page.getByRole('textbox', { name: t.chatInput });
+        this.sendButton = page.getByRole('button', { name: t.sendButton });
+        this.selectSubjectButton = page.getByRole('button', { name: t.selectSubjectButton });
+        this.skipAttachmentButton = page.getByRole('button', { name: t.skipAttachmentButton });
+        this.backToMenuButton = page.getByRole('button', { name: t.backToMenuButton });
+        this.botMessages = page.getByRole('log', { name: t.botMessage });
     }
 
     async open() {
