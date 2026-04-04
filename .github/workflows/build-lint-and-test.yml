@@ -37,6 +37,11 @@ jobs:
         env:
           SPRINT: sprint5
 
+      - name: Install composer dependencies
+        run: docker compose run -T --rm composer
+        env:
+          SPRINT: sprint5
+
       - name: Migrate and seed database
         run: |
           # Wait for database to be ready
