@@ -38,7 +38,7 @@ jobs:
           SPRINT: sprint5
 
       - name: Install composer dependencies
-        run: docker compose run -T --rm composer
+        run: docker compose exec -T laravel-api composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-ffi
         env:
           SPRINT: sprint5
 
