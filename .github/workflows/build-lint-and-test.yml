@@ -53,15 +53,6 @@ jobs:
             sleep 2
           done
 
-      - name: Fix Docker permissions
-        run: docker compose exec -T -u root laravel-api chown -R www-data:www-data /var/www
-        env:
-          SPRINT: sprint5
-
-      - name: Install composer dependencies
-        run: docker compose exec -T laravel-api composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-ffi
-        env:
-          SPRINT: sprint5
 
       - name: Migrate and seed database
         run: |
