@@ -8,7 +8,7 @@ export default defineConfig(
         { 
             input: 
                 { 
-                    target: path.join(__dirname, 'support', 'openAPI-specs', 'openAPI.json') , validation: false
+                    target: path.join(__dirname, 'sprint5', 'API', 'storage', 'api-docs', 'api-docs.json') , validation: false
                 },
 
         output: {
