@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-lint:
+  build-Tand-lint:
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,6 +34,11 @@ jobs:
 
       - name: Spin up Docker services
         run: docker compose up -d
+        env:
+          SPRINT: sprint5
+
+      - name: Fix Docker permissions
+        run: docker compose exec -T -u root laravel-api chown -R www-data:www-data /var/www
         env:
           SPRINT: sprint5
 

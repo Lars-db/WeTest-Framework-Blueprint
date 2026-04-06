@@ -26,12 +26,14 @@
     "generate:api": "orval --config orval.config.ts"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
     "@types/node": "^25.0.3",
     "@typescript-eslint/eslint-plugin": "^8.52.0",
     "@typescript-eslint/parser": "^8.52.0",
     "dotenv": "^17.2.3",
     "eslint-plugin-playwright": "^2.4.0",
+    "globals": "^15.12.0",
     "jiti": "^2.6.1",
     "zod": "^4.3.6"
   },
