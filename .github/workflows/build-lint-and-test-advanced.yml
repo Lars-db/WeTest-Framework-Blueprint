@@ -1,0 +1,102 @@
+name: Build and Lint (Advanced - With Dependency Caching)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-lint-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Set up Docker Buildx for better layer caching
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run linting checks
+        run: npm run lint
+
+      - name: Spin up Docker services
+        run: docker compose up -d
+        env:
+          SPRINT: sprint5
+
+      - name: Wait for Laravel API service to be ready
+        run: |
+          echo "Waiting for Laravel API container to be up..."
+          for i in {1..30}; do
+            if docker compose ps laravel-api | grep -q "Up"; then
+              echo "Laravel API is ready!"
+              break
+            fi
+            echo "Waiting ($i/30)..."
+            sleep 2
+          done
+
+      - name: Fix Docker permissions
+        run: docker compose exec -T -u root laravel-api chown -R www-data:www-data /var/www
+        env:
+          SPRINT: sprint5
+
+      # OPTIONAL: Cache Composer dependencies for faster rebuilds
+      # Uncomment to enable - saves ~30-60 seconds on cache hits
+      # - name: Cache Composer dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: sprint5/API/vendor
+      #     key: ${{ runner.os }}-composer-${{ hashFiles('sprint5/API/composer.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-composer-
+
+      - name: Install composer dependencies
+        run: docker compose exec -T laravel-api composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-ffi
+        env:
+          SPRINT: sprint5
+
+      - name: Migrate and seed database
+        run: |
+          # Wait for database to be ready
+          echo "Waiting for database..."
+          for i in {1..30}; do
+            if docker compose exec -T mariadb mysqladmin ping -h"localhost" --silent; then
+              echo "Database is up!"
+              break
+            fi
+            echo "Waiting ($i/30)..."
+            sleep 2
+          done
+          echo "Running migrations..."
+          docker compose exec -T laravel-api php artisan migrate:fresh --seed
+        env:
+          SPRINT: sprint5
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm test
+        env:
+          SPRINT: sprint5
+          CI: true
+
+

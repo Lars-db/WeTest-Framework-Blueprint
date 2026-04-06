@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-Tand-lint:
+  build-lint-and-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,6 +16,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      # Set up Docker Buildx for better caching
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -36,6 +40,18 @@ jobs:
         run: docker compose up -d
         env:
           SPRINT: sprint5
+
+      - name: Wait for Laravel API service to be ready
+        run: |
+          echo "Waiting for Laravel API container to be up..."
+          for i in {1..30}; do
+            if docker compose ps laravel-api | grep -q "Up"; then
+              echo "Laravel API is ready!"
+              break
+            fi
+            echo "Waiting ($i/30)..."
+            sleep 2
+          done
 
       - name: Fix Docker permissions
         run: docker compose exec -T -u root laravel-api chown -R www-data:www-data /var/www

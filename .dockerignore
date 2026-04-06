@@ -1,0 +1,59 @@
+# Docker Build Optimization
+# Files to exclude from Docker build context - speeds up builds
+
+# Version control
+.git
+.gitignore
+.github
+.gitattributes
+
+# Documentation
+README.md
+LICENSE
+*.md
+CODE_OF_CONDUCT.md
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Node/npm
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn.lock
+
+# Test results
+test-results/
+playwright-report/
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+out/
+
+# Temporary files
+*.tmp
+.cache/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+Dockerfile
+
+# Logs
+logs/
+*.log
+
