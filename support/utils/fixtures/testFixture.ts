@@ -19,8 +19,8 @@ export type CombinedFixtures = {
 };
 
 const test = baseTest.extend<CombinedFixtures>({
-    page: async ({ browser }, use) => {
-        const context = await browser.newContext();
+    page: async ({ browser, contextOptions }, use) => {
+        const context = await browser.newContext(contextOptions);
         const page = await context.newPage();
         await use(page);
         await context.close();

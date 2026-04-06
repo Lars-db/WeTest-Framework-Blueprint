@@ -22,6 +22,12 @@ async function globalSetup() {
     console.warn(`WARNING! Environment file not found: ${envPath}.`);
   }
 
+  const userJsonPath = 'tests/.auth/user.json';
+  if (fs.existsSync(userJsonPath)) {
+    fs.rmSync(userJsonPath);
+    console.log(`Global setup: Removed ${userJsonPath}`);
+  }
+
   console.log('Global setup: Starting environment initialization...');
 
   console.log('Global setup: Initializing database connections...');

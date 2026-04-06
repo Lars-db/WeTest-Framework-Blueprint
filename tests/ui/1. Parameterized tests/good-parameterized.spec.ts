@@ -44,19 +44,8 @@ const contactFormScenarios = [
 test.describe('Contact Form Validation - Good Parameterized', () => {
   
   test.beforeEach(async ({ page }) => {
-    // Navigate to the contact page before each test case
-    // Using a more resilient approach: if direct navigation fails (404), navigate through the UI
-    try {
-      const response = await page.goto('/contact');
-      if (response && response.status() === 404) {
-        await page.goto('/');
-        await page.getByRole('link', { name: 'Contact' }).click();
-      }
-    } catch {
-      await page.goto('/');
-      await page.getByRole('link', { name: 'Contact' }).click();
-    }
-    await expect(page).toHaveURL(/.*\/contact/);
+    await page.goto('/contact');
+    await expect(page.locator('[data-test="first-name"]')).toHaveClass(/ng-invalid/);
   });
 
   contactFormScenarios.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
@@ -82,13 +71,7 @@ test.describe('Contact Form Validation - Good Parameterized', () => {
       // Note: We use a locator that targets the error container specifically
       const errorLocator = page.locator('.alert-danger');
       
-      // If the first click didn't trigger validation, we try again (resilience)
-      await expect(async () => {
-        if (!await errorLocator.isVisible()) {
-          await submitButton.click();
-        }
-        await expect(errorLocator).toContainText(expectedError);
-      }).toPass();
+      await expect(errorLocator).toContainText(expectedError);
     });
   });
 

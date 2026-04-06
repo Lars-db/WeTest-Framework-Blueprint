@@ -44,18 +44,8 @@ const data = [
 test.describe('Contact Form Validation - Fixed Parameterized', () => {
   
   test.beforeEach(async ({ page }) => {
-    // FIX: Resilient navigation to the contact page
-    try {
-      const response = await page.goto('/contact');
-      if (response && response.status() === 404) {
-        await page.goto('/');
-        await page.getByRole('link', { name: 'Contact' }).click();
-      }
-    } catch {
-      await page.goto('/');
-      await page.getByRole('link', { name: 'Contact' }).click();
-    }
-    await expect(page).toHaveURL(/.*\/contact/);
+    await page.goto('/contact');
+    await expect(page.locator('[data-test="first-name"]')).toHaveClass(/ng-pristine/);
   });
 
   data.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
@@ -74,13 +64,7 @@ test.describe('Contact Form Validation - Fixed Parameterized', () => {
       // FIX: Using proper Playwright assertion with better error messaging
       const errorLocator = page.locator('.alert-danger');
       
-      // If the first click didn't trigger validation, we try again (resilience)
-      await expect(async () => {
-        if (!await errorLocator.isVisible()) {
-          await submitButton.click();
-        }
-        await expect(errorLocator).toContainText(expectedError);
-      }).toPass();
+      await expect(errorLocator).toContainText(expectedError);
     });
   });
 

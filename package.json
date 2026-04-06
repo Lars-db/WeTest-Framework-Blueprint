@@ -19,6 +19,8 @@
   },
   "scripts": {
     "test": "playwright test",
+    "test:good": "playwright test good-",
+    "test:bad": "playwright test bad-",
     "build": "tsc --noEmit",
     "lint": "eslint .",
     "generate:api": "orval --config orval.config.ts"
