@@ -49,7 +49,7 @@ async function globalSetup() {
     siteUp = false;
   }
 
-  if (!siteUp) {
+  if (!siteUp && baseURL == 'http://localhost:4200') {
     console.log(`Global setup: ${baseURL} is not reachable. Starting Docker services...`);
     execSync('docker compose up -d', { stdio: 'inherit' });
     console.log('Global setup: Waiting for services to be ready...');
@@ -58,8 +58,10 @@ async function globalSetup() {
     console.log(`Global setup: ${baseURL} is up.`);
   }
 
-  console.log('Global setup: Running database migrations and seeds...');
-  execSync('docker compose exec laravel-api php artisan migrate:fresh --seed', { stdio: 'inherit' });
+  if (baseURL == 'http://localhost:4200') {
+      console.log('Global setup: Running database migrations and seeds...');
+      execSync('docker compose exec laravel-api php artisan migrate:fresh --seed', { stdio: 'inherit' });
+  }
 
   console.log('Global setup: Initializing database connections...');
   // await DbHelper.initializeConnections();
