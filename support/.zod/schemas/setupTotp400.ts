@@ -6,7 +6,7 @@
  * OpenAPI spec version: 5.0.0
  */
 
-export type 0a819cdd91a22a616d7ddbb08330394a200 = {
-  /** Success message */
-  message?: string;
+export type SetupTotp400 = {
+  /** Error message */
+  error?: string;
 };

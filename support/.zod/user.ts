@@ -83,9 +83,9 @@ export const storeUserBody = zod.object({
   "postal_code": zod.string().max(storeUserBodyAddressPostalCodeMax).optional()
 }).optional(),
   "phone": zod.string().max(storeUserBodyPhoneMax).optional(),
-  "dob": zod.string().date().optional().describe('Must be a valid date between 18 and 75 years ago'),
+  "dob": zod.iso.date().optional().describe('Must be a valid date between 18 and 75 years ago'),
   "password": zod.string().min(storeUserBodyPasswordMin).describe('Must include uppercase, lowercase, number, and symbol'),
-  "email": zod.string().email().max(storeUserBodyEmailMax)
+  "email": zod.email().max(storeUserBodyEmailMax)
 })
 
 /**
@@ -240,9 +240,9 @@ export const updateUserBody = zod.object({
   "postal_code": zod.string().max(updateUserBodyAddressPostalCodeMax).optional()
 }).optional(),
   "phone": zod.string().max(updateUserBodyPhoneMax).optional(),
-  "dob": zod.string().date().optional().describe('Must be a valid date between 18 and 75 years ago'),
+  "dob": zod.iso.date().optional().describe('Must be a valid date between 18 and 75 years ago'),
   "password": zod.string().min(updateUserBodyPasswordMin).describe('Must include uppercase, lowercase, number, and symbol'),
-  "email": zod.string().email().max(updateUserBodyEmailMax)
+  "email": zod.email().max(updateUserBodyEmailMax)
 })
 
 export const updateUserResponse = zod.object({
@@ -298,9 +298,9 @@ export const patchUserBody = zod.object({
   "postal_code": zod.string().max(patchUserBodyAddressPostalCodeMax).optional()
 }).optional(),
   "phone": zod.string().max(patchUserBodyPhoneMax).optional(),
-  "dob": zod.string().date().optional().describe('Must be a valid date between 18 and 75 years ago'),
+  "dob": zod.iso.date().optional().describe('Must be a valid date between 18 and 75 years ago'),
   "password": zod.string().min(patchUserBodyPasswordMin).describe('Must include uppercase, lowercase, number, and symbol'),
-  "email": zod.string().email().max(patchUserBodyEmailMax)
+  "email": zod.email().max(patchUserBodyEmailMax)
 })
 
 export const patchUserResponse = zod.object({

@@ -6,7 +6,9 @@
  * OpenAPI spec version: 5.0.0
  */
 
-export type 6d47e2cfc2f1079261c4c93ce0007ae0400 = {
-  /** Error message */
-  error?: string;
+export type SetupTotp200 = {
+  /** The TOTP secret key */
+  secret?: string;
+  /** URL for the QR code */
+  qrCodeUrl?: string;
 };

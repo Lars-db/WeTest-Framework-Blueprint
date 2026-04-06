@@ -2969,7 +2969,7 @@
                 ],
                 "summary": "Setup TOTP for the authenticated user",
                 "description": "Generates a TOTP secret and QR code URL for the user to scan and enables TOTP setup.",
-                "operationId": "6d47e2cfc2f1079261c4c93ce0007ae0",
+                "operationId": "setupTotp",
                 "responses": {
                     "200": {
                         "description": "TOTP setup successful",
@@ -3024,7 +3024,7 @@
                 ],
                 "summary": "Verify TOTP code for the authenticated user",
                 "description": "Validates the submitted TOTP code and enables TOTP if verification is successful.",
-                "operationId": "0a819cdd91a22a616d7ddbb08330394a",
+                "operationId": "verifyTotp",
                 "requestBody": {
                     "required": true,
                     "content": {

@@ -13,7 +13,7 @@ import * as zod from 'zod';
  * Generates a TOTP secret and QR code URL for the user to scan and enables TOTP setup.
  * @summary Setup TOTP for the authenticated user
  */
-export const 6d47e2cfc2f1079261c4c93ce0007ae0Response = zod.object({
+export const setupTotpResponse = zod.object({
   "secret": zod.string().optional().describe('The TOTP secret key'),
   "qrCodeUrl": zod.string().optional().describe('URL for the QR code')
 })
@@ -22,12 +22,12 @@ export const 6d47e2cfc2f1079261c4c93ce0007ae0Response = zod.object({
  * Validates the submitted TOTP code and enables TOTP if verification is successful.
  * @summary Verify TOTP code for the authenticated user
  */
-export const 0a819cdd91a22a616d7ddbb08330394aBody = zod.object({
+export const verifyTotpBody = zod.object({
   "access_token": zod.string().optional().describe('The user\'s access token'),
   "totp": zod.string().optional().describe('The 6-digit TOTP code')
 })
 
-export const 0a819cdd91a22a616d7ddbb08330394aResponse = zod.object({
+export const verifyTotpResponse = zod.object({
   "message": zod.string().optional().describe('Success message')
 })
 

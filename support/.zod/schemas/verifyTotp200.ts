@@ -6,9 +6,7 @@
  * OpenAPI spec version: 5.0.0
  */
 
-export type 0a819cdd91a22a616d7ddbb08330394aBody = {
-  /** The user's access token */
-  access_token?: string;
-  /** The 6-digit TOTP code */
-  totp?: string;
+export type VerifyTotp200 = {
+  /** Success message */
+  message?: string;
 };
