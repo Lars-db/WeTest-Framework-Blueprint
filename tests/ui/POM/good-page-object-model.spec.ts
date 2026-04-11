@@ -21,15 +21,16 @@ import { expect } from '@playwright/test';
 test.describe('Search functionality using POM', () => {
 
     test('should find results for a valid search query', async ({ homePage }) => {
+        const product = 'Hammer';
         // Step 1: Use a Page Object method to navigate
         await homePage.goto();
 
         // Step 2: Use an encapsulated action method
-        await homePage.searchFor('Hammer');
+        await homePage.searchFor(product);
 
         // Step 3: Perform assertions using Page Object properties (locators)
         // This keeps the test readable and expressive.
-        await expect(homePage.productNames).toContainText(['Hammer'], { ignoreCase: true });
+        await expect(homePage.productNames).toContainText([product], { ignoreCase: true });
     });
 
     test('should navigate to the sign-in page', async ({ homePage, page }) => {
