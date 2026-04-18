@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { HttpStatus } from "../../support/enums/httpStatus";
 import { BrandsApiHelper } from "../../support/utils/helpers/apiHelpers/brandsApiHelper";
 import { BrandResponse } from "../../support/.zod/schemas/brandResponse";
+import { getBrandsResponse } from "../../support/.zod/brand";
 
 test.describe("Brands API", () => {
   test("returns an array of brands", async ({ request }) => {
@@ -14,13 +15,8 @@ test.describe("Brands API", () => {
     });
 
     await test.step("Validate brands response", () => {
-      expect(Array.isArray(brands)).toBe(true);
-      expect(brands.length).toBeGreaterThan(0);
-      expect(brands[0]).toMatchObject({
-        id: expect.any(String),
-        name: expect.any(String),
-        slug: expect.any(String),
-      });
+      const result = getBrandsResponse.safeParse(brands);
+      expect(result.success, result.error?.message).toBe(true);
     });
   });
 });
