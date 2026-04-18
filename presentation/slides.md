@@ -257,53 +257,6 @@ layout: default
 </div>
 
 ---
-layout: default
----
-
-# Folder Structure at a Glance
-
-<div class="grid grid-cols-2 gap-10 mt-6">
-
-<div>
-
-<div class="font-mono text-sm leading-8 text-gray-300">
-<span class="text-blue-400">tests/</span><br>
-&nbsp;&nbsp;<span class="text-green-400">ui/</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;auth/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;checkout/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dashboard/<br>
-&nbsp;&nbsp;<span class="text-green-400">api/</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;users/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;orders/<br>
-&nbsp;&nbsp;<span class="text-yellow-400">.auth/</span> ← saved login state
-</div>
-
-</div>
-
-<div>
-
-<div class="font-mono text-sm leading-8 text-gray-300">
-<span class="text-blue-400">support/</span><br>
-&nbsp;&nbsp;<span class="text-purple-400">pages/</span> ← Page Objects<br>
-&nbsp;&nbsp;<span class="text-purple-400">utils/</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;fixtures/ ← custom test fixtures<br>
-&nbsp;&nbsp;&nbsp;&nbsp;helpers/<br>
-&nbsp;&nbsp;<span class="text-orange-400">config/</span><br>
-&nbsp;&nbsp;<span class="text-orange-400">environment/</span> ← .env files<br>
-&nbsp;&nbsp;<span class="text-orange-400">test-data/</span><br>
-&nbsp;&nbsp;<span class="text-red-400">globalSetup.ts</span><br>
-&nbsp;&nbsp;<span class="text-red-400">globalTeardown.ts</span>
-</div>
-
-</div>
-
-</div>
-
-<div class="mt-8 text-center text-gray-400">
-Predictable structure → any team member (or AI) knows exactly where to look
-</div>
-
----
 layout: center
 ---
 
@@ -498,6 +451,7 @@ Tests call methods, not locators.
 UI changes → update <strong class="text-green-400">one class</strong>, not dozens of tests
 </div>
 
+
 ---
 layout: default
 ---
@@ -606,80 +560,44 @@ layout: default
 
 # Parallelism — Speed With Control
 
-<div class="grid grid-cols-2 gap-6 mt-6">
+<div class="mt-6 flex flex-col gap-5">
 
-<div class="flex flex-col gap-4">
-
-  <div class="rounded-xl overflow-hidden" style="border: 1px solid #30363d;">
-    <div class="bg-[#161b22] px-4 py-2 flex items-center gap-2 border-b border-[#30363d]">
-      <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
-      <span class="ml-2 text-xs text-gray-500 font-mono">playwright.config.ts</span>
-    </div>
-    <div class="bg-[#0d1117] px-5 py-4 font-mono text-sm leading-7">
-      <div><span class="text-[#d2a8ff]">export default</span> <span class="text-[#58a6ff]">defineConfig</span><span class="text-gray-400">({"{"}</span></div>
-      <div class="pl-4"><span class="text-[#79c0ff]">workers</span><span class="text-gray-400">:</span> <span class="text-[#3fb950]">process.env.CI</span> <span class="text-gray-400">?</span> <span class="text-[#ffa657]">4</span> <span class="text-gray-400">:</span> <span class="text-[#ffa657]">2</span><span class="text-gray-400">,</span></div>
-      <div class="pl-4"><span class="text-[#79c0ff]">fullyParallel</span><span class="text-gray-400">:</span> <span class="text-[#3fb950]">true</span><span class="text-gray-400">,</span></div>
-      <div class="pl-4"><span class="text-[#79c0ff]">retries</span><span class="text-gray-400">:</span> <span class="text-[#3fb950]">process.env.CI</span> <span class="text-gray-400">?</span> <span class="text-[#ffa657]">2</span> <span class="text-gray-400">:</span> <span class="text-[#ffa657]">0</span><span class="text-gray-400">,</span></div>
-      <div><span class="text-gray-400">{"}"}</span><span class="text-gray-400">)</span></div>
-    </div>
+  <div class="text-gray-400 text-sm leading-6">
+    Playwright distributes tests across <span class="text-white font-semibold">workers</span> — separate processes, each with its own browser instance. No shared state. No interference.
   </div>
 
-  <div class="rounded-xl p-4 font-mono text-xs" style="background: rgba(63,185,80,0.05); border: 1px solid rgba(63,185,80,0.25);">
-    <div class="text-[#3fb950]/60 mb-2 uppercase tracking-widest text-[10px]">tip</div>
-    <span class="text-gray-300">Each worker gets its own </span><span class="text-[#58a6ff]">BrowserContext</span><span class="text-gray-300"> — fully isolated, no shared state.</span>
+  <div class="grid grid-cols-3 gap-4">
+
+  <div class="relative rounded-xl p-5 flex flex-col gap-2 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(63,185,80,0.06)); border: 1px solid rgba(63,185,80,0.35);">
+      <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+      <div class="text-2xl">⚡</div>
+      <div class="text-sm font-bold text-[#3fb950]">Workers run in parallel</div>
+      <div class="text-xs text-gray-400 leading-5">Each worker picks up the next available test. The more workers, the faster the suite — up to your CPU limit.</div>
+    </div>
+
+  <div class="relative rounded-xl p-5 flex flex-col gap-2 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.35);">
+      <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+      <div class="text-2xl">🧩</div>
+      <div class="text-sm font-bold text-[#58a6ff]">Full isolation by default</div>
+      <div class="text-xs text-gray-400 leading-5">Each worker gets its own browser context. Login state, cookies, and storage are never shared between tests.</div>
+    </div>
+
+  <div class="relative rounded-xl p-5 flex flex-col gap-2 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.06)); border: 1px solid rgba(210,168,255,0.35);">
+      <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
+      <div class="text-2xl">🔒</div>
+      <div class="text-sm font-bold text-[#d2a8ff]">Serial when needed</div>
+      <div class="text-xs text-gray-400 leading-5">Some flows depend on order — e.g. create → edit → delete. Group those explicitly to run sequentially on a single worker.</div>
+    </div>
+
   </div>
 
-</div>
-
-<div class="flex flex-col gap-3">
-
-  <div class="relative rounded-xl p-4 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(63,185,80,0.06)); border: 1px solid rgba(63,185,80,0.35);">
-    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
-    <div class="flex items-center gap-3">
-      <span class="text-xl">⚡</span>
-      <div>
-        <div class="text-sm font-bold text-[#3fb950]">fullyParallel</div>
-        <div class="text-xs text-gray-400 mt-0.5">Tests within a file run in parallel too — not just file-by-file</div>
-      </div>
+  <div class="rounded-xl px-5 py-4 flex items-center gap-4" style="background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.25);">
+    <span class="text-xl">💡</span>
+    <div class="text-xs text-gray-300 leading-5">
+      <span class="text-yellow-300 font-semibold">Rule of thumb:</span> run more workers on CI where resources are dedicated, fewer locally to keep your machine responsive. Playwright auto-scales to half your CPU cores if you let it.
     </div>
   </div>
 
-  <div class="relative rounded-xl p-4 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.35);">
-    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
-    <div class="flex items-center gap-3">
-      <span class="text-xl">🔢</span>
-      <div>
-        <div class="text-sm font-bold text-[#58a6ff]">workers: 'auto'</div>
-        <div class="text-xs text-gray-400 mt-0.5">Playwright picks the count — half your CPU cores by default</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="relative rounded-xl p-4 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.06)); border: 1px solid rgba(210,168,255,0.35);">
-    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
-    <div class="flex items-center gap-3">
-      <span class="text-xl">🔒</span>
-      <div>
-        <div class="text-sm font-bold text-[#d2a8ff]">test.describe.serial()</div>
-        <div class="text-xs text-gray-400 mt-0.5">Force sequential execution when order truly matters</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="relative rounded-xl p-4 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(251,191,36,0.06)); border: 1px solid rgba(251,191,36,0.3);">
-    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #fbbf24, transparent);"></div>
-    <div class="flex items-center gap-3">
-      <span class="text-xl">🔁</span>
-      <div>
-        <div class="text-sm font-bold text-yellow-300">retries on CI</div>
-        <div class="text-xs text-gray-400 mt-0.5">Network flakiness is real — retry on CI, fail fast locally</div>
-      </div>
-    </div>
-  </div>
-
-</div>
 </div>
 
 ---
@@ -1394,87 +1312,50 @@ layout: default
 layout: default
 ---
 
-# Sharding in Practice
+# Sharding vs Workers — Two Levels of Speed
 
-<div class="grid grid-cols-3 gap-5 mt-5">
+<div class="mt-5 flex flex-col gap-5">
 
-<!-- Formula -->
-<div class="bg-[#0d1117] border border-[#d2a8ff]/40 rounded-xl p-5 flex flex-col items-center justify-center text-center">
-  <div class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-4">Wall-clock time</div>
-  <div class="text-3xl font-bold text-[#d2a8ff] mb-1">T / N</div>
-  <div class="text-xs text-gray-500 mt-1"><span class="text-white">T</span> = total duration &nbsp;·&nbsp; <span class="text-white">N</span> = shards</div>
-  <div class="mt-4 w-full border-t border-[#30363d] pt-4 text-xs text-gray-400 leading-relaxed">
-    500 tests · 40 min serial<br>
-    <span class="text-[#d2a8ff] font-bold">÷ 4 shards = ~10 min</span>
-  </div>
-</div>
+  <div class="grid grid-cols-2 gap-5">
 
-<!-- Shard index formula -->
-<div class="bg-[#0d1117] border border-[#ffa657]/40 rounded-xl p-5 flex flex-col items-center justify-center text-center">
-  <div class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-4">Shard index range</div>
-  <div class="font-mono text-sm text-[#ffa657] leading-loose">
-    <div>start = ⌊(i−1)·T/N⌋</div>
-    <div>end &nbsp;= ⌊i·T/N⌋ − 1</div>
-  </div>
-  <div class="mt-4 w-full border-t border-[#30363d] pt-4 text-xs text-gray-400 leading-relaxed">
-    Playwright assigns by <span class="text-white">file order</span><br>
-    <span class="text-[#ffa657]">no overlap, no gaps</span>
-  </div>
-</div>
-
-<!-- Scaling table -->
-<div class="bg-[#0d1117] border border-[#3fb950]/40 rounded-xl p-5">
-  <div class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-4 text-center">Speedup curve</div>
-  <div class="space-y-2.5">
-    <div v-for="row in [{n:1,t:'40 min',w:'w-full',c:'text-red-400',bc:'bg-red-500/40'},{n:2,t:'20 min',w:'w-1/2',c:'text-orange-400',bc:'bg-orange-500/40'},{n:4,t:'10 min',w:'w-1/4',c:'text-yellow-400',bc:'bg-yellow-500/40'},{n:8,t:'5 min',w:'w-1/8',c:'text-[#3fb950]',bc:'bg-[#3fb950]/50'}]" class="flex items-center gap-2">
-      <div class="text-[10px] text-gray-500 w-10 text-right shrink-0">{{ row.n }}×</div>
-      <div class="flex-1 bg-[#161b22] rounded h-3 overflow-hidden">
-        <div class="h-full rounded" :class="[row.w, row.bc]"></div>
+  <div class="relative rounded-xl p-5 flex flex-col gap-3 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.4);">
+      <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-2xl">🧵</span>
+        <div class="text-base font-bold text-[#58a6ff]">Workers — within one machine</div>
       </div>
-      <div class="text-xs font-bold shrink-0" :class="row.c">{{ row.t }}</div>
-    </div>
-  </div>
-  <div class="mt-4 text-[10px] text-gray-600 text-center">linear speedup — ideal conditions</div>
-</div>
-
-</div>
-
-<!-- Bottom note -->
-<div class="mt-4 flex items-center gap-2 bg-[#161b22] border border-[#30363d] rounded-lg px-4 py-2.5 text-xs text-gray-400">
-  <span class="text-yellow-400 text-base">⚠</span>
-  <span>Speedup is <strong class="text-white">linear only when tests are evenly distributed</strong> — large test files skew shard duration. Keep files small.</span>
-</div>
-
----
-layout: center
----
-
-<div class="flex flex-col items-center justify-center gap-10 h-full">
-
-  <div class="text-center">
-    <div class="text-6xl mb-5 drop-shadow-[0_0_24px_rgba(63,185,80,0.5)]">💻</div>
-    <div class="text-5xl font-bold tracking-tight bg-gradient-to-r from-[#58a6ff] via-white to-[#3fb950] bg-clip-text text-transparent">
-      Let's see the code
-    </div>
-    <div class="text-base text-gray-400 mt-3 tracking-widest uppercase font-mono">
-      Switching to the IDE
-    </div>
+      <ul class="text-xs text-gray-400 leading-7 list-none pl-1 flex flex-col gap-0.5">
+        <li>→ Multiple threads inside one Playwright process</li>
+        <li>→ Tests run simultaneously, not one by one</li>
+        <li>→ Each worker gets its own browser context</li>
+        <li>→ Limited by your machine's CPU cores</li>
+      </ul>
   </div>
 
-  <div class="rounded-2xl overflow-hidden border border-[#30363d] font-mono text-sm w-full max-w-xl shadow-[0_0_40px_rgba(63,185,80,0.12)]">
-    <div class="bg-[#161b22] px-4 py-2.5 flex items-center gap-2 border-b border-[#30363d]">
-      <div class="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
-      <div class="w-3 h-3 rounded-full bg-[#febc2e]"></div>
-      <div class="w-3 h-3 rounded-full bg-[#28c840]"></div>
-      <span class="ml-auto text-xs text-gray-500 tracking-wide">bash — wetest-slidev</span>
+  <div class="relative rounded-xl p-5 flex flex-col gap-3 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.06)); border: 1px solid rgba(210,168,255,0.4);">
+      <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-2xl">🖥️</span>
+        <div class="text-base font-bold text-[#d2a8ff]">Sharding — across machines</div>
+      </div>
+      <ul class="text-xs text-gray-400 leading-7 list-none pl-1 flex flex-col gap-0.5">
+        <li>→ Splits the suite across multiple CI jobs</li>
+        <li>→ Each machine runs a slice of the test files</li>
+        <li>→ No communication between shards</li>
+        <li>→ Scales beyond what one machine can do</li>
+      </ul>
     </div>
-    <div class="bg-[#0d1117] px-6 py-5 leading-8">
-      <div><span class="text-[#3fb950]">$</span> <span class="text-white">code .github/workflows/</span></div>
-    </div>
+
   </div>
 
-  <div class="font-mono text-xs text-[#3fb950]/50 tracking-widest uppercase">
-    // 🔀 Sharding
+  <div class="rounded-xl px-5 py-4 flex flex-col gap-3" style="background: rgba(63,185,80,0.04); border: 1px solid rgba(63,185,80,0.25);">
+    <div class="flex items-center gap-2">
+      <span class="text-base">💡</span>
+      <span class="text-xs font-semibold text-[#3fb950] uppercase tracking-widest">They work together</span>
+    </div>
+    <div class="text-xs text-gray-300 leading-6">
+      Each shard can still use multiple workers internally. A suite of 400 tests split into 4 shards gives each machine 100 tests — then workers on each machine run those 100 in parallel. You get horizontal scale <span class="text-white font-semibold">(shards)</span> and vertical scale <span class="text-white font-semibold">(workers)</span> at the same time.
+    </div>
   </div>
 
 </div>
@@ -1714,61 +1595,56 @@ layout: default
 
 # The Full Picture
 
-<div class="mt-6">
+<div class="mt-5 grid grid-cols-2 gap-3 text-sm">
 
-<div class="grid grid-cols-2 gap-4 text-sm">
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(88,166,255,0.07); border: 1px solid rgba(88,166,255,0.3);">
+    <span class="text-lg shrink-0">📁</span>
+    <div><strong class="text-[#58a6ff]">Folder structure</strong><br><span class="text-gray-400 text-xs">AI knows where to put new tests</span></div>
+  </div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(255,166,87,0.07); border: 1px solid rgba(255,166,87,0.3);">
+    <span class="text-lg shrink-0">🪝</span>
+    <div><strong class="text-[#ffa657]">Hooks</strong><br><span class="text-gray-400 text-xs">AI uses lifecycle hooks correctly</span></div>
+  </div>
 
-<div class="space-y-3">
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">📁</span>
-    <div><strong>Folder structure</strong> <span class="text-gray-400 ml-2">→ AI knows where to put new tests</span></div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(63,185,80,0.07); border: 1px solid rgba(63,185,80,0.3);">
+    <span class="text-lg shrink-0">⚙️</span>
+    <div><strong class="text-[#3fb950]">Config</strong><br><span class="text-gray-400 text-xs">AI generates config-aware tests</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">⚙️</span>
-    <div><strong>Config</strong> <span class="text-gray-400 ml-2">→ AI generates config-aware tests</span></div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(210,168,255,0.07); border: 1px solid rgba(210,168,255,0.3);">
+    <span class="text-lg shrink-0">🌍</span>
+    <div><strong class="text-[#d2a8ff]">Global setup & teardown</strong><br><span class="text-gray-400 text-xs">AI uses clean setup and teardown</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">💾</span>
-    <div><strong>Storage state</strong> <span class="text-gray-400 ml-2">→ AI skips writing login boilerplate</span></div>
-  </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🏛️</span>
-    <div><strong>Page Objects</strong> <span class="text-gray-400 ml-2">→ AI extends existing classes</span></div>
-  </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🔌</span>
-    <div><strong>Fixtures</strong> <span class="text-gray-400 ml-2">→ AI reuses declared fixtures by name</span></div>
-  </div>
-</div>
 
-<div class="space-y-3">
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🪝</span>
-    <div><strong>Hooks</strong> <span class="text-gray-400 ml-2">→ AI uses lifecycle hooks correctly</span></div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.3);">
+    <span class="text-lg shrink-0">💾</span>
+    <div><strong class="text-yellow-300">Storage state</strong><br><span class="text-gray-400 text-xs">AI skips writing login boilerplate</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🌍</span>
-    <div><strong>Global setup</strong> <span class="text-gray-400 ml-2">→ AI doesn't touch infrastructure code</span></div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(88,166,255,0.07); border: 1px solid rgba(88,166,255,0.3);">
+    <span class="text-lg shrink-0">🎨</span>
+    <div><strong class="text-[#58a6ff]">Design patterns</strong><br><span class="text-gray-400 text-xs">AI follows Builder, Factory, Facade</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🎨</span>
-    <div><strong>Design patterns</strong> <span class="text-gray-400 ml-2">→ AI follows Builder, Factory, Facade</span></div>
+
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(63,185,80,0.07); border: 1px solid rgba(63,185,80,0.3);">
+    <span class="text-lg shrink-0">🏛️</span>
+    <div><strong class="text-[#3fb950]">Page Objects</strong><br><span class="text-gray-400 text-xs">AI uses existing classes</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">🔀</span>
-    <div><strong>Sharding</strong> <span class="text-gray-400 ml-2">→ AI-generated tests run in parallel</span></div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(255,166,87,0.07); border: 1px solid rgba(255,166,87,0.3);">
+    <span class="text-lg shrink-0">🔀</span>
+    <div><strong class="text-[#ffa657]">Sharding</strong><br><span class="text-gray-400 text-xs">Reduces total suite runtime</span></div>
   </div>
-  <div class="flex gap-4 items-center p-3 bg-[#0d1117] border border-[#30363d] rounded-lg">
-    <span class="text-xl">📄</span>
-    <div><strong>CLAUDE.md</strong> <span class="text-gray-400 ml-2">→ AI follows your rules by default</span></div>
+
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(210,168,255,0.07); border: 1px solid rgba(210,168,255,0.3);">
+    <span class="text-lg shrink-0">🔌</span>
+    <div><strong class="text-[#d2a8ff]">Fixtures</strong><br><span class="text-gray-400 text-xs">AI reuses declared fixtures</span></div>
   </div>
-</div>
+  <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.3);">
+    <span class="text-lg shrink-0">📄</span>
+    <div><strong class="text-yellow-300">CLAUDE.md</strong><br><span class="text-gray-400 text-xs">AI follows your rules by default</span></div>
+  </div>
 
 </div>
 
-</div>
-
-<div class="text-center text-xl font-bold mt-6 text-green-400">
+<div class="text-center text-base font-bold mt-5 text-green-400">
 Build the foundation. Let AI multiply it.
 </div>
 
@@ -1819,12 +1695,20 @@ class: text-center
   <div class="font-bold text-lg mb-3 text-white">Lars de Bruijn</div>
   <div class="space-y-2">
     <div class="flex items-center gap-2 text-sm text-gray-400">
-      <span class="text-[#3fb950] font-mono">$</span>
+      <ph-github-logo class="text-base text-[#58a6ff] shrink-0" />
       <span>Github: <code class="text-[#58a6ff]">@Lars-db</code></span>
     </div>
     <div class="flex items-center gap-2 text-sm text-gray-400">
-      <span class="text-[#3fb950] font-mono">$</span>
+      <ph-linkedin-logo class="text-base text-[#58a6ff] shrink-0" />
       <span>LinkedIn: <code class="text-[#58a6ff]">/in/lars-de-bruijn-/</code></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <ph-buildings class="text-base text-[#58a6ff] shrink-0" />
+      <span>Company website: <code class="text-[#58a6ff]">techchamps.io</code></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <ph-globe class="text-base text-[#58a6ff] shrink-0" />
+      <span>Personal website: <code class="text-[#58a6ff]">arcanaops.io</code></span>
     </div>
   </div>
 </div>
@@ -1834,12 +1718,20 @@ class: text-center
   <div class="font-bold text-lg mb-3 text-white">Marco Maes</div>
   <div class="space-y-2">
     <div class="flex items-center gap-2 text-sm text-gray-400">
-      <span class="text-[#3fb950] font-mono">$</span>
+      <ph-github-logo class="text-base text-[#d2a8ff] shrink-0" />
       <span>Github: <code class="text-[#d2a8ff]">@marcomaes</code></span>
     </div>
     <div class="flex items-center gap-2 text-sm text-gray-400">
-      <span class="text-[#3fb950] font-mono">$</span>
+      <ph-linkedin-logo class="text-base text-[#d2a8ff] shrink-0" />
       <span>LinkedIn: <code class="text-[#d2a8ff]">/in/marcomaes/</code></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <ph-buildings class="text-base text-[#d2a8ff] shrink-0" />
+      <span>Company website: <code class="text-[#d2a8ff]">polteq.nl</code></span>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <ph-globe class="text-base text-[#d2a8ff] shrink-0" />
+      <span>Personal website: <code class="text-[#d2a8ff]">testbaas.nl</code></span>
     </div>
   </div>
 </div>
