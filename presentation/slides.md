@@ -551,14 +551,14 @@ layout: section
 # ⚡ Parallel Tests & Workers
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"More Workers, Less Waiting — Scale Without Chaos"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"More Workers, Less Waiting. Scale Without Chaos"</span>
 </div>
 
 ---
 layout: default
 ---
 
-# Parallelism — Speed With Control
+# Parallelism: Speed With Control
 
 <div class="mt-6 flex flex-col gap-5">
 
@@ -586,7 +586,7 @@ layout: default
       <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
       <div class="text-2xl">🔒</div>
       <div class="text-sm font-bold text-[#d2a8ff]">Serial when needed</div>
-      <div class="text-xs text-gray-400 leading-5">Some flows depend on order — e.g. create → edit → delete. Group those explicitly to run sequentially on a single worker.</div>
+      <div class="text-xs text-gray-400 leading-5">Some flows depend on order: e.g. create → edit → delete. Group those explicitly to run sequentially on a single worker.</div>
     </div>
 
   </div>
@@ -714,52 +714,56 @@ layout: default
 
 # Multiple Roles, Multiple States
 
-<div class="text-center text-gray-400 mb-8">
-Real apps have multiple user types — your framework should too
+<div class="text-center text-gray-500 text-sm mb-6 uppercase tracking-widest font-semibold">Real apps have multiple user types, so your framework should too</div>
+
+<div class="flex justify-center items-center gap-4 mb-6">
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(255,166,87,0.06)); border: 1px solid rgba(255,166,87,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ffa657, transparent);"></div>
+    <div class="text-4xl mb-3">👑</div>
+    <div class="font-bold text-[#ffa657]">Admin</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">admin.json</div>
+  </div>
+
+  <div class="text-gray-600 text-xl">→</div>
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+    <div class="text-4xl mb-3">🛒</div>
+    <div class="font-bold text-[#58a6ff]">Buyer</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">buyer.json</div>
+  </div>
+
+  <div class="text-gray-600 text-xl">→</div>
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.06)); border: 1px solid rgba(210,168,255,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
+    <div class="text-4xl mb-3">👀</div>
+    <div class="font-bold text-[#d2a8ff]">Read-only</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">viewer.json</div>
+  </div>
+
 </div>
 
-<div class="flex justify-center gap-6 mt-6">
+<div class="grid grid-cols-3 gap-4 text-center text-sm">
 
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">👑</div>
-  <div class="font-bold">Admin</div>
-  <div class="text-xs text-gray-400 mt-2">admin.json</div>
-</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(63,185,80,0.05)); border: 1px solid rgba(63,185,80,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#3fb950]/70 font-semibold mb-2">setup project</div>
+    <div class="text-gray-400 leading-6">Runs once.<br>Authenticates all roles.<br>Saves state files.</div>
+  </div>
 
-<div class="flex items-center text-2xl text-gray-600">→</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(255,166,87,0.05)); border: 1px solid rgba(255,166,87,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ffa657, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#ffa657]/70 font-semibold mb-2">admin-tests project</div>
+    <div class="text-gray-400 leading-6">Loads admin.json.<br>All tests start<br>already authenticated.</div>
+  </div>
 
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">🛒</div>
-  <div class="font-bold">Buyer</div>
-  <div class="text-xs text-gray-400 mt-2">buyer.json</div>
-</div>
-
-<div class="flex items-center text-2xl text-gray-600">→</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">👀</div>
-  <div class="font-bold">Read-only</div>
-  <div class="text-xs text-gray-400 mt-2">viewer.json</div>
-</div>
-
-</div>
-
-<div class="mt-10 grid grid-cols-3 gap-4 text-center text-sm">
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">setup project</div>
-  <div class="text-gray-400">Runs once.<br>Authenticates all roles.<br>Saves state files.</div>
-</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">admin-tests project</div>
-  <div class="text-gray-400">Loads admin.json.<br>All tests start<br>already authenticated.</div>
-</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">buyer-tests project</div>
-  <div class="text-gray-400">Loads buyer.json.<br>Same pattern,<br>different permissions.</div>
-</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.05)); border: 1px solid rgba(88,166,255,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#58a6ff]/70 font-semibold mb-2">buyer-tests project</div>
+    <div class="text-gray-400 leading-6">Loads buyer.json.<br>Same pattern,<br>different permissions.</div>
+  </div>
 
 </div>
 
@@ -806,7 +810,7 @@ layout: section
 # 🪝 Hooks & Fixtures
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Stop Repeating Setup — Inject What Tests Need"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Stop Repeating Setup. Inject What Tests Need"</span>
 </div>
 
 ---
@@ -950,7 +954,7 @@ layout: default
   </div>
   <div class="mt-4 bg-emerald-900/20 border border-emerald-800 rounded-lg p-3 text-xs">
     <div class="font-bold text-emerald-300 mb-1">Best for</div>
-    <div class="text-gray-400">Page objects, API clients, authenticated contexts — anything shared across multiple test files or the whole team</div>
+    <div class="text-gray-400">Page objects, API clients, authenticated contexts. Anything shared across multiple test files or the whole team</div>
   </div>
 </div>
 
@@ -1025,7 +1029,7 @@ layout: section
 # 🌍 Global Setup & Teardown
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Prepare the World Once — Then Let Tests Focus on Tests"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Prepare the World Once. Then Let Tests Focus on Tests"</span>
 </div>
 
 ---
@@ -1035,7 +1039,7 @@ layout: default
 # Before Any Test Runs
 
 <div class="text-center text-gray-400 mb-8">
-Global setup runs once — before the first test, before any browser opens
+Global setup runs once before any test starts
 </div>
 
 <div class="grid grid-cols-4 gap-4 mt-4">
@@ -1154,7 +1158,7 @@ layout: default
     </div>
     <div class="flex items-start gap-2">
       <span class="text-[#d2a8ff] font-bold mt-0.5">3</span>
-      <span>Only the tests in that bucket run — the rest are <strong class="text-white">skipped entirely</strong></span>
+      <span>Only the tests in that bucket run. The rest are <strong class="text-white">skipped entirely</strong></span>
     </div>
   </div>
 </div>
@@ -1199,7 +1203,7 @@ layout: default
   </div>
 
   <div class="bg-yellow-900/15 border border-yellow-500/30 rounded-lg px-3 py-2 mt-1">
-    <div class="text-[10px] text-yellow-200/80 leading-relaxed">Each runner boots a <strong>full environment</strong> — browsers, deps, app</div>
+    <div class="text-[10px] text-yellow-200/80 leading-relaxed">Each runner boots a <strong>full environment</strong> with browsers, deps, app</div>
   </div>
 </div>
 
@@ -1338,7 +1342,7 @@ layout: default
       <span class="text-xs font-semibold text-[#3fb950] uppercase tracking-widest">They work together</span>
     </div>
     <div class="text-xs text-gray-300 leading-6">
-      Each shard can still use multiple workers internally. A suite of 400 tests split into 4 shards gives each machine 100 tests — then workers on each machine run those 100 in parallel. You get horizontal scale <span class="text-white font-semibold">(shards)</span> and vertical scale <span class="text-white font-semibold">(workers)</span> at the same time.
+      Each shard can still use multiple workers internally. A suite of 400 tests split into 4 shards gives each machine 100 tests. Then workers on each machine run those 100 in parallel. You get horizontal scale <span class="text-white font-semibold">(shards)</span> and vertical scale <span class="text-white font-semibold">(workers)</span> at the same time.
     </div>
   </div>
 
@@ -1369,7 +1373,7 @@ layout: default
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#58a6ff]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-xl mb-3">🏗️</div>
   <div class="font-bold text-[#58a6ff] mb-1">Builder</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Construct test data step by step — readable, no copy-paste objects</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Construct test data step by step. Readable, no copy-paste objects</div>
   <div class="space-y-1.5 w-full text-left mt-3">
     <div class="bg-[#58a6ff]/5 border border-[#58a6ff]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#58a6ff]/60 font-semibold mb-0.5">Use when</div>
@@ -1385,7 +1389,7 @@ layout: default
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#3fb950]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#3fb950]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#3fb950]/10 border border-[#3fb950]/30 flex items-center justify-center text-xl mb-3">🏭</div>
   <div class="font-bold text-[#3fb950] mb-1">Factory</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Centralize resource creation — one place to create, one place to clean up</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Centralize resource creation. One place to create, one place to clean up</div>
   <div class="space-y-1.5 w-full text-left mt-3">
     <div class="bg-[#3fb950]/5 border border-[#3fb950]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#3fb950]/60 font-semibold mb-0.5">Use when</div>
@@ -1401,7 +1405,7 @@ layout: default
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#ffa657]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#ffa657]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-xl mb-3">🔀</div>
   <div class="font-bold text-[#ffa657] mb-1">Strategy</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Swap behavior per environment — same tests run on tst, acc, prd</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Swap behavior per environment. Same tests run on tst, acc, prd</div>
   <div class="space-y-1.5 w-full text-left mt-3">
     <div class="bg-[#ffa657]/5 border border-[#ffa657]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#ffa657]/60 font-semibold mb-0.5">Use when</div>
@@ -1417,7 +1421,7 @@ layout: default
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#d2a8ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#d2a8ff]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-xl mb-3">🎭</div>
   <div class="font-bold text-[#d2a8ff] mb-1">Facade</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Wrap Playwright behind a clean interface — hide complexity from tests</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Wrap Playwright behind a clean interface. Hide complexity from tests</div>
   <div class="space-y-1.5 w-full text-left mt-3">
     <div class="bg-[#d2a8ff]/5 border border-[#d2a8ff]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#d2a8ff]/60 font-semibold mb-0.5">Use when</div>
@@ -1480,7 +1484,7 @@ layout: section
 # 🤖 AI Tips & Agents
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Teach the AI Your Patterns — It Will Follow Them at Scale"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Teach the AI Your Patterns. It Will Follow Them at Scale"</span>
 </div>
 
 ---
