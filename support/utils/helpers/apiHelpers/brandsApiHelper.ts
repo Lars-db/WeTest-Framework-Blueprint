@@ -9,32 +9,32 @@ async function resolve<T>(call: Promise<APIResponse>): Promise<ApiResult<T>> {
 
 export abstract class BrandsApiHelper {
     static getAll(request: APIRequestContext): Promise<ApiResult<Brand[]>> {
-        return resolve(request.get('/brands'));
+        return resolve(request.get(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT));    
     }
 
     static getById(request: APIRequestContext, brandId: string): Promise<ApiResult<Brand>> {
-        return resolve(request.get(`/brands/${brandId}`));
+        return resolve(request.get(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT + `/${brandId}`));
     }
 
     static search(request: APIRequestContext, query: string): Promise<ApiResult<Brand[]>> {
-        return resolve(request.get(`/brands/search?q=${query}`));
+        return resolve(request.get(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT + `/search?q=${query}`));
     }
 
     static create(request: APIRequestContext, data: { name: string; slug: string }): Promise<ApiResult<Brand>> {
-        return resolve(request.post('/brands', { data }));
+        return resolve(request.post(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT, { data }));
     }
 
     static update(request: APIRequestContext, brandId: string, data: { name: string; slug: string }): Promise<ApiResult<Brand>> {
-        return resolve(request.put(`/brands/${brandId}`, { data }));
+        return resolve(request.put(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT + `/${brandId}`, { data }));
     }
 
     static delete(request: APIRequestContext, brandId: string, token: string): Promise<ApiResult<null>> {
-        return resolve(request.delete(`/brands/${brandId}`, {
+        return resolve(request.delete(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT + `/${brandId}`, {
             headers: { Authorization: `Bearer ${token}` },
         }));
     }
 
     static deleteUnauthorized(request: APIRequestContext, brandId: string): Promise<ApiResult<null>> {
-        return resolve(request.delete(`/brands/${brandId}`));
+        return resolve(request.delete(process.env.API_BASE_URL! + process.env.BRANDS_ENDPOINT + `/${brandId}`));
     }
 }

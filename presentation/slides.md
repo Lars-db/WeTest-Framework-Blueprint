@@ -192,7 +192,7 @@ layout: center
 <div class="relative rounded-xl p-4 text-center overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.07)); border: 1px solid rgba(210,168,255,0.4); box-shadow: 0 0 16px rgba(210,168,255,0.07);">
   <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
   <div class="text-2xl mb-2">🔀</div>
-  <div class="text-xs font-mono font-semibold text-gray-300 leading-tight">Sharding</div>
+  <div class="text-xs font-mono font-semibold text-gray-300 leading-tight">Test<br>Sharding</div>
   <div class="mt-2 text-[10px] font-mono font-bold text-[#d2a8ff] bg-[#d2a8ff]/10 rounded px-1 inline-block">#8</div>
 </div>
 
