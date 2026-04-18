@@ -1,0 +1,108 @@
+/* Terminal / Code-Editor Theme */
+
+/* JetBrains Mono for all code and mono elements */
+.font-mono, code, pre {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace !important;
+}
+
+/* Terminal window chrome — add class="terminal-window" to a wrapper div */
+.terminal-window {
+    position: relative;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.terminal-window::before {
+    content: '● ● ●';
+    display: block;
+    padding: 8px 14px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: transparent;
+    text-shadow: 0 0 0 #ff5f57, 4px 0 0 #febc2e, 8px 0 0 #28c840;
+}
+
+/* Terminal window with title */
+.terminal-window[data-title]::before {
+    content: '● ● ●  ' attr(data-title);
+    color: transparent;
+    text-shadow: 0 0 0 #ff5f57, 0.9em 0 0 #febc2e, 1.8em 0 0 #28c840;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* Prompt decoration */
+.terminal-prompt::before {
+    content: '$ ';
+    color: #3fb950;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}
+
+/* Section slide accent line */
+.section-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #3fb950;
+    background: rgba(63, 185, 80, 0.1);
+    border: 1px solid rgba(63, 185, 80, 0.3);
+    border-radius: 6px;
+    padding: 2px 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Code-like accent colors */
+.text-cyan-tech { color: #79c0ff; }
+.text-green-tech { color: #3fb950; }
+.text-orange-tech { color: #ffa657; }
+.text-purple-tech { color: #d2a8ff; }
+
+/* Glow effect for key numbers / stats */
+.stat-glow {
+    text-shadow: 0 0 20px currentColor;
+}
+
+/* Dark card consistent with GitHub dark */
+.gh-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+}
+.gh-card:hover {
+    border-color: #58a6ff;
+}
+
+/* Blink cursor animation */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.cursor-blink::after {
+    content: '▋';
+    color: #3fb950;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+}
+
+/* Scanline overlay for extra terminal vibe (subtle) */
+.scanlines {
+    position: relative;
+}
+.scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 2px,
+            rgba(0, 0, 0, 0.05) 2px,
+            rgba(0, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+}
