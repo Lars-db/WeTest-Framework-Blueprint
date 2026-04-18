@@ -563,7 +563,7 @@ layout: default
 <div class="mt-6 flex flex-col gap-5">
 
   <div class="text-gray-400 text-sm leading-6">
-    Playwright distributes tests across <span class="text-white font-semibold">workers</span> — separate processes, each with its own browser instance. No shared state. No interference.
+    Playwright distributes tests across <span class="text-white font-semibold">workers</span> with separate processes, each with its own browser instance. No shared state. No interference.
   </div>
 
   <div class="grid grid-cols-3 gap-4">
@@ -572,7 +572,7 @@ layout: default
       <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
       <div class="text-2xl">⚡</div>
       <div class="text-sm font-bold text-[#3fb950]">Workers run in parallel</div>
-      <div class="text-xs text-gray-400 leading-5">Each worker picks up the next available test. The more workers, the faster the suite — up to your CPU limit.</div>
+      <div class="text-xs text-gray-400 leading-5">Each worker picks up the next available test. The more workers, the faster the suite capped by your CPU limit.</div>
     </div>
 
   <div class="relative rounded-xl p-5 flex flex-col gap-2 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.35);">
@@ -652,44 +652,58 @@ layout: default
 
 # The Login Tax
 
-<div class="grid grid-cols-2 gap-12 mt-6">
+<div class="grid grid-cols-2 gap-6 mt-6">
 
-<div class="text-center">
-
-<div class="text-6xl mb-4">😓</div>
-
-## Without Storage State
-
-<div class="mt-4 text-gray-300">
-Every test logs in.<br>
-Every test waits for auth.<br>
-Every test hits the auth server.
+<div class="relative rounded-2xl p-6 flex flex-col gap-4 overflow-hidden" style="background: linear-gradient(145deg, #1a0a0a 0%, #0d1117 60%); border: 1px solid rgba(239,68,68,0.4);">
+  <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ef4444, transparent);"></div>
+  <div class="flex items-center gap-3">
+    <span class="text-4xl">😓</span>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-red-400/70 font-semibold mb-0.5">Without Storage State</div>
+      <div class="text-lg font-bold text-white">Login on every test</div>
+    </div>
+  </div>
+  <div class="space-y-2">
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test logs in
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test waits for auth
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test hits the auth server
+    </div>
+  </div>
+  <div class="rounded-xl px-5 py-4 text-center mt-1" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);">
+    <div class="text-2xl font-bold text-red-400">100 tests × 3s login</div>
+    <div class="text-gray-400 text-sm mt-1">= 5 minutes wasted, every run</div>
+  </div>
 </div>
 
-<div class="mt-6 bg-red-900/30 border border-red-700 rounded-lg p-4">
-  <div class="text-2xl font-bold text-red-400">100 tests × 3s login</div>
-  <div class="text-gray-400 mt-1">= 5 minutes wasted, every run</div>
-</div>
-
-</div>
-
-<div class="text-center">
-
-<div class="text-6xl mb-4">🚀</div>
-
-## With Storage State
-
-<div class="mt-4 text-gray-300">
-Login runs <strong>once</strong> before the suite.<br>
-Auth state saved to a JSON file.<br>
-All tests load it instantly.
-</div>
-
-<div class="mt-6 bg-green-900/30 border border-green-700 rounded-lg p-4">
-  <div class="text-2xl font-bold text-green-400">1 login, 100 tests benefit</div>
-  <div class="text-gray-400 mt-1">Setup project → all browser projects</div>
-</div>
-
+<div class="relative rounded-2xl p-6 flex flex-col gap-4 overflow-hidden" style="background: linear-gradient(145deg, #061a0e 0%, #0d1117 60%); border: 1px solid rgba(63,185,80,0.4);">
+  <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+  <div class="flex items-center gap-3">
+    <span class="text-4xl">🚀</span>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-[#3fb950]/70 font-semibold mb-0.5">With Storage State</div>
+      <div class="text-lg font-bold text-white">Login once, reuse everywhere</div>
+    </div>
+  </div>
+  <div class="space-y-2">
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> Login runs <strong class="text-white">once</strong> before the suite
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> Auth state saved to a JSON file
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> All tests load it instantly
+    </div>
+  </div>
+  <div class="rounded-xl px-5 py-4 text-center mt-1" style="background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.25);">
+    <div class="text-2xl font-bold text-[#3fb950]">1 login, 100 tests benefit</div>
+    <div class="text-gray-400 text-sm mt-1">Setup project → all browser projects</div>
+  </div>
 </div>
 
 </div>
