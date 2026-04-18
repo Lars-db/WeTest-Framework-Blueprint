@@ -238,7 +238,7 @@ layout: default
   <div class="text-xl font-bold font-mono mb-1 text-[#3fb950]">tests/</div>
   <div class="text-sm text-gray-500 uppercase tracking-widest mb-4">What to test</div>
   <div class="text-gray-300 text-sm leading-relaxed">The intent. The business flows.<br>A new team member reads this<br>and understands the product.</div>
-  <div class="mt-6 text-gray-500 text-xs font-mono tracking-wide">ui/ · api/ · e2e/</div>
+  <div class="mt-6 text-gray-500 text-xs font-mono tracking-wide">ui/ · api/</div>
 </div>
 
 <div class="relative rounded-xl p-8 text-center overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.35); box-shadow: 0 0 24px rgba(88,166,255,0.08);">
