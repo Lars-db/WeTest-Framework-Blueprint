@@ -43,9 +43,9 @@ layout: center
   <div class="text-blue-400 font-medium mb-4">Test Automation Engineer</div>
   <div class="grid grid-cols-2 gap-3 text-sm text-left">
     <div class="bg-white/5 rounded-lg px-3 py-2">🗓️ ~5 years in QA</div>
-    <div class="bg-white/5 rounded-lg px-3 py-2">⌨️ TypeScript · Playwright</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">💻 TypeScript · Playwright</div>
     <div class="bg-white/5 rounded-lg px-3 py-2">🤖 AI-assisted testing</div>
-    <div class="bg-white/5 rounded-lg px-3 py-2">🌍 TechChamps</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">🏢 TechChamps</div>
   </div>
   <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 gap-3 text-sm text-left">
     <div class="bg-blue-500/10 rounded-lg px-3 py-2">🎸 Guitar</div>
@@ -54,18 +54,18 @@ layout: center
 </div>
 
 <div class="bg-gradient-to-br from-purple-900/40 to-purple-700/20 border border-purple-500/30 rounded-2xl p-8 text-center">
-  <div class="text-6xl mb-4">🧑‍🔬</div>
+  <div class="text-6xl mb-4">🕵🏼‍♂️</div>
   <div class="text-2xl font-bold mb-1">Marco Maes</div>
   <div class="text-purple-400 font-medium mb-4">Test Automation Architect</div>
   <div class="grid grid-cols-2 gap-3 text-sm text-left">
-    <div class="bg-white/5 rounded-lg px-3 py-2">🗓️ ~10 years in QA</div>
-    <div class="bg-white/5 rounded-lg px-3 py-2">⌨️ TypeScript · Playwright</div>
-    <div class="bg-white/5 rounded-lg px-3 py-2">🎤 Trainer</div>
-    <div class="bg-white/5 rounded-lg px-3 py-2">🤝 Polteq</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">🗓️ ~15 years in QA</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">💻 TypeScript · Playwright</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">👨🏼‍🏫 Trainer</div>
+    <div class="bg-white/5 rounded-lg px-3 py-2">🏢 Polteq</div>
   </div>
   <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 gap-3 text-sm text-left">
-    <div class="bg-purple-500/10 rounded-lg px-3 py-2">🏃 Runner</div>
-    <div class="bg-purple-500/10 rounded-lg px-3 py-2">📚 Sci-fi reader</div>
+    <div class="bg-purple-500/10 rounded-lg px-3 py-2">🎸 Guitar hero 🎮</div>
+    <div class="bg-purple-500/10 rounded-lg px-3 py-2">📸 Photographer</div>
   </div>
 </div>
 
