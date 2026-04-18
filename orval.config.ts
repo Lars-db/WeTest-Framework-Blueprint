@@ -3,11 +3,11 @@ import path from 'path';
 
 
 export default defineConfig(
-    { 
-        Zod: 
-        { 
-            input: 
-                { 
+    {
+        Zod:
+        {
+            input:
+                {
                     target: path.join(__dirname, 'sprint5', 'API', 'storage', 'api-docs', 'api-docs.json') , validation: false
                 },
 
