@@ -224,6 +224,130 @@ Skill files live in `.claude/skills/{name}/SKILL.md`.
 
 ---
 
+## Design patterns
+
+Four patterns are used in this framework. Apply them as described below — do not introduce them outside of their designated contexts.
+
+---
+
+### Builder — constructing complex request bodies
+
+**Where:** `support/utils/builders/{resource}Builder.ts`
+**When:** an API test needs to create a request body with more than two fields, or where optional fields need to vary between tests.
+
+```ts
+// support/utils/builders/productBuilder.ts
+export class ProductBuilder {
+    private data = {
+        name: 'Default Product',
+        price: 9.99,
+        category_id: '01',
+        brand_id: '01',
+        description: '',
+        stock: 10,
+    };
+
+    withName(name: string)             { this.data.name = name;              return this; }
+    withPrice(price: number)           { this.data.price = price;            return this; }
+    withStock(stock: number)           { this.data.stock = stock;            return this; }
+    withCategory(categoryId: string)   { this.data.category_id = categoryId; return this; }
+
+    build() { return { ...this.data }; }
+}
+
+// Usage in a test:
+const payload = new ProductBuilder().withName('Hammer').withStock(0).build();
+const result  = await ProductsApiHelper.create(request, token, payload);
+```
+
+---
+
+### Factory — creating test data and page objects
+
+**Where:** `support/utils/factories/{resource}Factory.ts`
+**When:** tests need pre-configured objects (data payloads or page instances) without repeating setup logic.
+
+```ts
+// support/utils/factories/userFactory.ts
+export class UserFactory {
+    static customer() {
+        return { email: 'customer@practicesoftwaretesting.com', password: 'welcome01' };
+    }
+    static admin() {
+        return { email: 'admin@practicesoftwaretesting.com', password: 'welcome01' };
+    }
+    static guest(overrides: Partial<{ email: string; password: string }> = {}) {
+        return { email: 'guest@example.com', password: 'Test1234!', ...overrides };
+    }
+}
+
+// Usage in a test:
+const { email, password } = UserFactory.customer();
+await loginPage.enterLoginCredentials(email, password);
+```
+
+---
+
+### Strategy — swappable authentication behaviour
+
+**Where:** `support/utils/strategies/authStrategy.ts`
+**When:** a test or helper needs to authenticate differently depending on role, and that choice should be decoupled from the test body.
+
+```ts
+// support/utils/strategies/authStrategy.ts
+export interface AuthStrategy {
+    getToken(request: APIRequestContext): Promise<string>;
+}
+
+export class CustomerAuthStrategy implements AuthStrategy {
+    async getToken(request: APIRequestContext) {
+        const result = await UserApiHelper.login(request, UserFactory.customer());
+        return result.body.access_token;
+    }
+}
+
+export class AdminAuthStrategy implements AuthStrategy {
+    async getToken(request: APIRequestContext) {
+        const result = await UserApiHelper.login(request, UserFactory.admin());
+        return result.body.access_token;
+    }
+}
+
+// Usage in a test:
+const strategy: AuthStrategy = new AdminAuthStrategy();
+const token = await strategy.getToken(request);
+const result = await ProductsApiHelper.create(request, token, payload);
+```
+
+---
+
+### Facade — single entry point hiding framework complexity
+
+**Where:** already implemented — `support/utils/fixtures/testFixture.ts` is the UI facade; API helpers are the API facade.
+**When:** adding a new helper that combines multiple lower-level operations into one call.
+
+`testFixture.ts` exposes `page`, `loginPage`, `homePage`, `assertionHelper` etc. as a single import — callers never construct these individually.
+
+For API tests, each helper class is a facade over `APIRequestContext`: callers pass `request` and get an `ApiResult<T>` back without knowing about headers, base URLs, or JSON parsing.
+
+```ts
+// Adding a new facade method — combine two steps behind one call:
+// support/utils/helpers/apiHelpers/cartApiHelper.ts
+static async addAndVerify(
+    request: APIRequestContext,
+    token: string,
+    productId: string
+): Promise<ApiResult<CartResponse>> {
+    const result = await CartApiHelper.addItem(request, token, productId);
+    if (result.status !== HttpStatus.CREATED) {
+        throw new Error(`Cart add failed: ${result.status}`);
+    }
+    return CartApiHelper.get(request, token);
+}
+```
+
+---
+
 ## Critical rules
 
 **Always**

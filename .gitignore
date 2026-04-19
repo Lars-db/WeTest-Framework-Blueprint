@@ -28,3 +28,6 @@ Thumbs.db
 # Playwright reports
 /test-results/
 /playwright-report/
+
+# Auth state files — contain session tokens, must not be committed
+tests/.auth/

@@ -18,6 +18,11 @@ Presented at **WeTest Conference 2026** | [Visit the Conference](https://wetest.
 - [Framework Components](#framework-components)
   - [Logging with Winston](#logging-with-winston)
   - [Support Utilities](#support-utilities)
+- [Design Patterns](#design-patterns)
+  - [Builder](#builder)
+  - [Factory](#factory)
+  - [Strategy](#strategy)
+  - [Facade](#facade)
 - [Best Practices](#best-practices)
 - [Contributing](#contributing)
 - [License](#license)
@@ -351,6 +356,111 @@ export enum Duration {
   LONG = 10000,
 }
 ```
+
+---
+
+## Design Patterns
+
+The framework applies four design patterns to keep tests readable and the support layer maintainable. Each pattern has a single, well-defined responsibility.
+
+---
+
+### Builder
+
+**Location:** `support/utils/builders/`
+
+The Builder pattern solves the problem of constructing complex request bodies inside tests. Without it, every test that creates a product or registers a user must supply all fields inline — repetitive, fragile, and hard to read.
+
+| File | What it builds |
+|---|---|
+| `productBuilder.ts` | `ProductRequest` payload — 8 fields, most optional. Fluent helpers like `.asRental()` and `.asLocationOffer()` make intent clear without noise. |
+| `userBuilder.ts` | `UserRequest` payload — required fields with defaults, nested `address` object, and a `Date.now()` email so every `build()` produces a unique user. |
+
+```typescript
+// Without Builder
+const payload = { name: 'Hammer', price: 12.99, category_id: '01', brand_id: '01',
+                  description: '...', product_image_id: '01', is_rental: false, is_location_offer: false };
+
+// With Builder
+const payload = new ProductBuilder().withName('Hammer').withPrice(12.99).build();
+const rental  = new ProductBuilder().withName('Grinder').asRental().build();
+```
+
+---
+
+### Factory
+
+**Location:** `support/utils/factories/`
+
+The Factory pattern provides named presets for objects that tests need repeatedly. It is the single source of truth for seeded account credentials and common product configurations — one place to update when data changes.
+
+| File | What it produces |
+|---|---|
+| `userFactory.ts` | Pre-configured credentials for `customer()` and `admin()`. The `byRole()` method selects by role name, and `token()` logs in and returns a Bearer token in one call. |
+| `productFactory.ts` | Product payloads for `standard()`, `rental()`, and `locationOffer()` variants. The `withOverrides()` method handles one-off variations without a full builder chain. |
+
+```typescript
+// UserFactory — known accounts
+const creds = UserFactory.customer();            // { email, password }
+const token = await UserFactory.token(request, 'admin');
+
+// ProductFactory — preset configurations
+const product  = ProductFactory.standard();
+const rental   = ProductFactory.rental();
+const modified = ProductFactory.withOverrides({ price: 4.99 });
+```
+
+---
+
+### Strategy
+
+**Location:** `support/utils/strategies/authStrategy.ts`
+
+The Strategy pattern makes authentication behaviour swappable without changing the test body. Tests depend on the `AuthStrategy` interface, not on a specific implementation. Changing the role under test is a one-line change.
+
+```typescript
+export interface AuthStrategy {
+    getToken(request: APIRequestContext): Promise<string>;
+}
+
+export class CustomerAuthStrategy implements AuthStrategy { ... }
+export class AdminAuthStrategy implements AuthStrategy { ... }
+```
+
+```typescript
+// Swap the strategy — test body stays identical
+const strategy: AuthStrategy = new AdminAuthStrategy();
+const token = await strategy.getToken(request);
+const result = await ProductsApiHelper.create(request, token, payload);
+```
+
+---
+
+### Facade
+
+**Location:** `support/utils/helpers/apiHelpers/` · `support/utils/fixtures/testFixture.ts`
+
+The Facade pattern hides framework complexity behind a clean surface. Callers get a simple method; the details of headers, URL construction, JSON parsing, and multi-step flows stay inside the helper.
+
+Two levels of facade exist in this framework:
+
+**1. Individual methods** — each method on a helper class is a facade over a raw HTTP call. The caller passes `request` and gets an `ApiResult<T>` back.
+
+```typescript
+// No headers, no URL building, no JSON parsing in the test
+const result = await UserApiHelper.login(request, UserFactory.customer());
+expect(result.status).toBe(HttpStatus.OK);
+```
+
+**2. Compound methods** — `UserApiHelper.registerAndLogin()` combines two HTTP calls into one. The test receives a ready-to-use token; the intermediate register/login responses are never visible.
+
+```typescript
+const payload = new UserBuilder().withEmail('new@test.com').build();
+const token   = await UserApiHelper.registerAndLogin(request, payload);
+// token is ready to use — no register/login steps in the test body
+```
+
+`testFixture.ts` is the UI facade: it exposes `page`, `loginPage`, `homePage`, `assertionHelper`, and more as a single import so tests never construct these objects individually.
 
 ---
 
