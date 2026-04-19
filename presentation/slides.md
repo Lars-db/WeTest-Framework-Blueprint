@@ -81,11 +81,11 @@ layout: center
 
 <div class="bg-gradient-to-br from-red-900/30 to-orange-900/20 border border-red-500/30 rounded-2xl p-10 text-center max-w-3xl mx-auto mb-8">
   <div class="text-4xl font-bold leading-relaxed mb-4">
-    Most test suites don't fail<br>
-    because of missing tests.
+    Most test suites collapse<br>
+    because there's no scalable foundation to build on.
   </div>
   <div class="text-lg text-gray-400 mt-4">
-    They fail because there's no scalable foundation to build on.<br>
+  <br>
     <strong class="text-red-300">AI accelerates output, but it also accelerates technical debt.</strong>
   </div>
 </div>
