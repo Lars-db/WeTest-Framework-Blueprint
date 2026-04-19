@@ -1,0 +1,20 @@
+skills:
+  # External skills (sourced from GitHub)
+  slidev:
+    source: slidevjs/slidev
+
+  # Project skills (local, defined in .claude/skills/)
+  api-helper:
+    source: local
+
+  api-test:
+    source: local
+
+  endpoint:
+    source: local
+
+  pom:
+    source: local
+
+  zod-validate:
+    source: local
