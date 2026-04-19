@@ -551,19 +551,19 @@ layout: section
 # ⚡ Parallel Tests & Workers
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"More Workers, Less Waiting — Scale Without Chaos"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"More Workers, Less Waiting. Scale Without Chaos"</span>
 </div>
 
 ---
 layout: default
 ---
 
-# Parallelism — Speed With Control
+# Parallelism: Speed With Control
 
 <div class="mt-6 flex flex-col gap-5">
 
   <div class="text-gray-400 text-sm leading-6">
-    Playwright distributes tests across <span class="text-white font-semibold">workers</span> — separate processes, each with its own browser instance. No shared state. No interference.
+    Playwright distributes tests across <span class="text-white font-semibold">workers</span> with separate processes, each with its own browser instance. No shared state. No interference.
   </div>
 
   <div class="grid grid-cols-3 gap-4">
@@ -572,7 +572,7 @@ layout: default
       <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
       <div class="text-2xl">⚡</div>
       <div class="text-sm font-bold text-[#3fb950]">Workers run in parallel</div>
-      <div class="text-xs text-gray-400 leading-5">Each worker picks up the next available test. The more workers, the faster the suite — up to your CPU limit.</div>
+      <div class="text-xs text-gray-400 leading-5">Each worker picks up the next available test. The more workers, the faster the suite capped by your CPU limit.</div>
     </div>
 
   <div class="relative rounded-xl p-5 flex flex-col gap-2 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.35);">
@@ -586,7 +586,7 @@ layout: default
       <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
       <div class="text-2xl">🔒</div>
       <div class="text-sm font-bold text-[#d2a8ff]">Serial when needed</div>
-      <div class="text-xs text-gray-400 leading-5">Some flows depend on order — e.g. create → edit → delete. Group those explicitly to run sequentially on a single worker.</div>
+      <div class="text-xs text-gray-400 leading-5">Some flows depend on order: e.g. create → edit → delete. Group those explicitly to run sequentially on a single worker.</div>
     </div>
 
   </div>
@@ -652,44 +652,58 @@ layout: default
 
 # The Login Tax
 
-<div class="grid grid-cols-2 gap-12 mt-6">
+<div class="grid grid-cols-2 gap-6 mt-6">
 
-<div class="text-center">
-
-<div class="text-6xl mb-4">😓</div>
-
-## Without Storage State
-
-<div class="mt-4 text-gray-300">
-Every test logs in.<br>
-Every test waits for auth.<br>
-Every test hits the auth server.
+<div class="relative rounded-2xl p-6 flex flex-col gap-4 overflow-hidden" style="background: linear-gradient(145deg, #1a0a0a 0%, #0d1117 60%); border: 1px solid rgba(239,68,68,0.4);">
+  <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ef4444, transparent);"></div>
+  <div class="flex items-center gap-3">
+    <span class="text-4xl">😓</span>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-red-400/70 font-semibold mb-0.5">Without Storage State</div>
+      <div class="text-lg font-bold text-white">Login on every test</div>
+    </div>
+  </div>
+  <div class="space-y-2">
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test logs in
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test waits for auth
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-red-400 text-base">✕</span> Every test hits the auth server
+    </div>
+  </div>
+  <div class="rounded-xl px-5 py-4 text-center mt-1" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);">
+    <div class="text-2xl font-bold text-red-400">100 tests × 3s login</div>
+    <div class="text-gray-400 text-sm mt-1">= 5 minutes wasted, every run</div>
+  </div>
 </div>
 
-<div class="mt-6 bg-red-900/30 border border-red-700 rounded-lg p-4">
-  <div class="text-2xl font-bold text-red-400">100 tests × 3s login</div>
-  <div class="text-gray-400 mt-1">= 5 minutes wasted, every run</div>
-</div>
-
-</div>
-
-<div class="text-center">
-
-<div class="text-6xl mb-4">🚀</div>
-
-## With Storage State
-
-<div class="mt-4 text-gray-300">
-Login runs <strong>once</strong> before the suite.<br>
-Auth state saved to a JSON file.<br>
-All tests load it instantly.
-</div>
-
-<div class="mt-6 bg-green-900/30 border border-green-700 rounded-lg p-4">
-  <div class="text-2xl font-bold text-green-400">1 login, 100 tests benefit</div>
-  <div class="text-gray-400 mt-1">Setup project → all browser projects</div>
-</div>
-
+<div class="relative rounded-2xl p-6 flex flex-col gap-4 overflow-hidden" style="background: linear-gradient(145deg, #061a0e 0%, #0d1117 60%); border: 1px solid rgba(63,185,80,0.4);">
+  <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+  <div class="flex items-center gap-3">
+    <span class="text-4xl">🚀</span>
+    <div>
+      <div class="text-xs uppercase tracking-widest text-[#3fb950]/70 font-semibold mb-0.5">With Storage State</div>
+      <div class="text-lg font-bold text-white">Login once, reuse everywhere</div>
+    </div>
+  </div>
+  <div class="space-y-2">
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> Login runs <strong class="text-white">once</strong> before the suite
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> Auth state saved to a JSON file
+    </div>
+    <div class="flex items-center gap-3 text-sm text-gray-300">
+      <span class="text-[#3fb950] text-base">✓</span> All tests load it instantly
+    </div>
+  </div>
+  <div class="rounded-xl px-5 py-4 text-center mt-1" style="background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.25);">
+    <div class="text-2xl font-bold text-[#3fb950]">1 login, 100 tests benefit</div>
+    <div class="text-gray-400 text-sm mt-1">Setup project → all browser projects</div>
+  </div>
 </div>
 
 </div>
@@ -700,52 +714,56 @@ layout: default
 
 # Multiple Roles, Multiple States
 
-<div class="text-center text-gray-400 mb-8">
-Real apps have multiple user types — your framework should too
+<div class="text-center text-gray-500 text-sm mb-6 uppercase tracking-widest font-semibold">Real apps have multiple user types, so your framework should too</div>
+
+<div class="flex justify-center items-center gap-4 mb-6">
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(255,166,87,0.06)); border: 1px solid rgba(255,166,87,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ffa657, transparent);"></div>
+    <div class="text-4xl mb-3">👑</div>
+    <div class="font-bold text-[#ffa657]">Admin</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">admin.json</div>
+  </div>
+
+  <div class="text-gray-600 text-xl">→</div>
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.06)); border: 1px solid rgba(88,166,255,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+    <div class="text-4xl mb-3">🛒</div>
+    <div class="font-bold text-[#58a6ff]">Buyer</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">buyer.json</div>
+  </div>
+
+  <div class="text-gray-600 text-xl">→</div>
+
+  <div class="relative rounded-2xl p-5 flex flex-col items-center text-center overflow-hidden w-36" style="background: linear-gradient(145deg, #0d1117 60%, rgba(210,168,255,0.06)); border: 1px solid rgba(210,168,255,0.4);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #d2a8ff, transparent);"></div>
+    <div class="text-4xl mb-3">👀</div>
+    <div class="font-bold text-[#d2a8ff]">Read-only</div>
+    <div class="text-xs text-gray-500 mt-2 font-mono">viewer.json</div>
+  </div>
+
 </div>
 
-<div class="flex justify-center gap-6 mt-6">
+<div class="grid grid-cols-3 gap-4 text-center text-sm">
 
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">👑</div>
-  <div class="font-bold">Admin</div>
-  <div class="text-xs text-gray-400 mt-2">admin.json</div>
-</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(63,185,80,0.05)); border: 1px solid rgba(63,185,80,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#3fb950]/70 font-semibold mb-2">setup project</div>
+    <div class="text-gray-400 leading-6">Runs once.<br>Authenticates all roles.<br>Saves state files.</div>
+  </div>
 
-<div class="flex items-center text-2xl text-gray-600">→</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(255,166,87,0.05)); border: 1px solid rgba(255,166,87,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #ffa657, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#ffa657]/70 font-semibold mb-2">admin-tests project</div>
+    <div class="text-gray-400 leading-6">Loads admin.json.<br>All tests start<br>already authenticated.</div>
+  </div>
 
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">🛒</div>
-  <div class="font-bold">Buyer</div>
-  <div class="text-xs text-gray-400 mt-2">buyer.json</div>
-</div>
-
-<div class="flex items-center text-2xl text-gray-600">→</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 text-center w-40">
-  <div class="text-4xl mb-3">👀</div>
-  <div class="font-bold">Read-only</div>
-  <div class="text-xs text-gray-400 mt-2">viewer.json</div>
-</div>
-
-</div>
-
-<div class="mt-10 grid grid-cols-3 gap-4 text-center text-sm">
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">setup project</div>
-  <div class="text-gray-400">Runs once.<br>Authenticates all roles.<br>Saves state files.</div>
-</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">admin-tests project</div>
-  <div class="text-gray-400">Loads admin.json.<br>All tests start<br>already authenticated.</div>
-</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
-  <div class="font-bold mb-2">buyer-tests project</div>
-  <div class="text-gray-400">Loads buyer.json.<br>Same pattern,<br>different permissions.</div>
-</div>
+  <div class="relative rounded-2xl p-5 overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(88,166,255,0.05)); border: 1px solid rgba(88,166,255,0.3);">
+    <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #58a6ff, transparent);"></div>
+    <div class="text-xs uppercase tracking-widest text-[#58a6ff]/70 font-semibold mb-2">buyer-tests project</div>
+    <div class="text-gray-400 leading-6">Loads buyer.json.<br>Same pattern,<br>different permissions.</div>
+  </div>
 
 </div>
 
@@ -792,7 +810,7 @@ layout: section
 # 🪝 Hooks & Fixtures
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Stop Repeating Setup — Inject What Tests Need"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Stop Repeating Setup. Inject What Tests Need"</span>
 </div>
 
 ---
@@ -848,83 +866,53 @@ layout: default
 
 # Fixtures — How They Work
 
-<div class="grid grid-cols-2 gap-6 mt-6">
+<div class="mt-8">
 
-<div class="space-y-4">
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-5">
-  <div class="text-xs font-bold text-emerald-400 uppercase tracking-wide mb-4">Under the hood</div>
-  <div class="space-y-3 text-sm">
-    <div class="flex gap-3 items-start">
-      <div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-xs font-bold text-emerald-400 flex-shrink-0 mt-0.5">1</div>
-      <div class="text-gray-300">A test <strong class="text-white">declares what it needs</strong> by name in its arguments</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-xs font-bold text-emerald-400 flex-shrink-0 mt-0.5">2</div>
-      <div class="text-gray-300">Playwright runs the fixture's <strong class="text-white">setup logic</strong> before the test body</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-xs font-bold text-emerald-400 flex-shrink-0 mt-0.5">3</div>
-      <div class="text-gray-300">The ready object is <strong class="text-white">injected into the test</strong> — no manual instantiation</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-xs font-bold text-emerald-400 flex-shrink-0 mt-0.5">4</div>
-      <div class="text-gray-300">After the test completes, Playwright runs <strong class="text-white">teardown automatically</strong> — no matter if the test passed or failed</div>
-    </div>
-  </div>
+<div class="flex items-center gap-4 mb-3">
+  <div class="w-32 text-right text-sm text-gray-400">Test declares</div>
+  <div class="w-4 h-4 rounded-full bg-emerald-500 flex-shrink-0"></div>
+  <div class="bg-emerald-900/30 border border-emerald-700 rounded px-4 py-2 text-sm flex-1"><strong>Declare by name</strong> — a test says what it needs in its arguments. No manual setup.</div>
 </div>
 
-<div class="bg-[#0d1117] border border-yellow-500/30 rounded-xl p-5">
-  <div class="text-xs font-bold text-yellow-400 uppercase tracking-wide mb-3">Fixtures compose</div>
-  <div class="text-sm text-gray-400">
-    A fixture can depend on other fixtures. Playwright resolves the full dependency graph — setup and teardown in the right order, every time.
-  </div>
-  <div class="mt-3 flex items-center gap-2 text-sm">
-    <span class="text-blue-300">page</span>
-    <span class="text-gray-500">→</span>
-    <span class="text-emerald-300">loginPage</span>
-    <span class="text-gray-500">→</span>
-    <span class="text-purple-300">cartPage</span>
-  </div>
+<div class="flex items-center gap-4 mb-3 ml-12">
+  <div class="w-20 text-right text-sm text-gray-400">Playwright</div>
+  <div class="w-4 h-4 rounded-full bg-blue-500 flex-shrink-0"></div>
+  <div class="bg-blue-900/30 border border-blue-700 rounded px-4 py-2 text-sm flex-1"><strong>Setup runs automatically</strong> — Playwright resolves dependencies and prepares the fixture before the test body.</div>
 </div>
 
+<div class="flex items-center gap-4 mb-3 ml-24">
+  <div class="w-8 text-right text-sm text-gray-400"></div>
+  <div class="w-4 h-4 rounded-full bg-white flex-shrink-0"></div>
+  <div class="bg-gray-800 border border-gray-600 rounded px-4 py-2 text-sm flex-1 font-bold">🧪 TEST RUNS — fixture is ready and injected</div>
 </div>
 
-<div class="space-y-4">
+<div class="flex items-center gap-4 ml-12">
+  <div class="w-20 text-right text-sm text-gray-400">Always</div>
+  <div class="w-4 h-4 rounded-full bg-red-500 flex-shrink-0"></div>
+  <div class="bg-red-900/30 border border-red-700 rounded px-4 py-2 text-sm flex-1"><strong>Teardown is guaranteed</strong> — cleanup runs after the test, whether it passed or failed.</div>
+</div>
 
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-5">
-  <div class="text-xs font-bold text-blue-400 uppercase tracking-wide mb-4">Why this scales</div>
-  <div class="space-y-3 text-sm text-gray-300">
-    <div class="flex gap-3 items-start">
-      <span class="text-blue-400 mt-1">▸</span>
-      <div><strong class="text-white">Define once</strong> — every test file in the project can use it by just declaring the name</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <span class="text-blue-400 mt-1">▸</span>
-      <div><strong class="text-white">No copy-paste setup</strong> — adding a new test never means duplicating boilerplate</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <span class="text-blue-400 mt-1">▸</span>
-      <div><strong class="text-white">Teardown is guaranteed</strong> — cleanup can't be forgotten, state can't leak between tests</div>
-    </div>
-    <div class="flex gap-3 items-start">
-      <span class="text-blue-400 mt-1">▸</span>
-      <div><strong class="text-white">Fully typed</strong> — TypeScript knows exactly what each fixture provides, across the whole codebase</div>
+<div class="mt-8 grid grid-cols-2 gap-4">
+  <div class="bg-[#0d1117] border border-yellow-500/30 rounded-xl px-5 py-4">
+    <div class="text-xs font-bold text-yellow-400 uppercase tracking-wide mb-2">Fixtures compose</div>
+    <div class="text-sm text-gray-400">A fixture can depend on other fixtures. Playwright resolves the full chain — in order, every time.</div>
+    <div class="mt-3 flex items-center gap-2 text-sm">
+      <span class="text-blue-300">page</span>
+      <span class="text-gray-500">→</span>
+      <span class="text-emerald-300">loginPage</span>
+      <span class="text-gray-500">→</span>
+      <span class="text-purple-300">cartPage</span>
     </div>
   </div>
-</div>
-
-<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-4 text-sm text-center">
-  <div class="text-gray-400 mb-2">A fixture can be anything your tests need</div>
-  <div class="flex flex-wrap justify-center gap-2">
-    <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-emerald-300">Page Object</span>
-    <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-blue-300">API Client</span>
-    <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-purple-300">Auth Context</span>
-    <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-yellow-300">Test Data</span>
-    <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-orange-300">DB Connection</span>
+  <div class="bg-[#0d1117] border border-[#30363d] rounded-xl px-5 py-4 text-center">
+    <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">A fixture can be anything</div>
+    <div class="flex flex-wrap justify-center gap-2">
+      <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-emerald-300">Page Object</span>
+      <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-blue-300">API Client</span>
+      <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-purple-300">Auth Context</span>
+      <span class="bg-[#161b22] border border-[#30363d] rounded px-2 py-1 text-xs text-yellow-300">Test Data</span>
+    </div>
   </div>
-</div>
-
 </div>
 
 </div>
@@ -966,7 +954,7 @@ layout: default
   </div>
   <div class="mt-4 bg-emerald-900/20 border border-emerald-800 rounded-lg p-3 text-xs">
     <div class="font-bold text-emerald-300 mb-1">Best for</div>
-    <div class="text-gray-400">Page objects, API clients, authenticated contexts — anything shared across multiple test files or the whole team</div>
+    <div class="text-gray-400">Page objects, API clients, authenticated contexts. Anything shared across multiple test files or the whole team</div>
   </div>
 </div>
 
@@ -1041,7 +1029,7 @@ layout: section
 # 🌍 Global Setup & Teardown
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Prepare the World Once — Then Let Tests Focus on Tests"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Prepare the World Once. Then Let Tests Focus on Tests"</span>
 </div>
 
 ---
@@ -1051,7 +1039,7 @@ layout: default
 # Before Any Test Runs
 
 <div class="text-center text-gray-400 mb-8">
-Global setup runs once — before the first test, before any browser opens
+Global setup runs once before any test starts
 </div>
 
 <div class="grid grid-cols-4 gap-4 mt-4">
@@ -1170,7 +1158,7 @@ layout: default
     </div>
     <div class="flex items-start gap-2">
       <span class="text-[#d2a8ff] font-bold mt-0.5">3</span>
-      <span>Only the tests in that bucket run — the rest are <strong class="text-white">skipped entirely</strong></span>
+      <span>Only the tests in that bucket run. The rest are <strong class="text-white">skipped entirely</strong></span>
     </div>
   </div>
 </div>
@@ -1215,7 +1203,7 @@ layout: default
   </div>
 
   <div class="bg-yellow-900/15 border border-yellow-500/30 rounded-lg px-3 py-2 mt-1">
-    <div class="text-[10px] text-yellow-200/80 leading-relaxed">Each runner boots a <strong>full environment</strong> — browsers, deps, app</div>
+    <div class="text-[10px] text-yellow-200/80 leading-relaxed">Each runner boots a <strong>full environment</strong> with browsers, deps, app</div>
   </div>
 </div>
 
@@ -1354,7 +1342,7 @@ layout: default
       <span class="text-xs font-semibold text-[#3fb950] uppercase tracking-widest">They work together</span>
     </div>
     <div class="text-xs text-gray-300 leading-6">
-      Each shard can still use multiple workers internally. A suite of 400 tests split into 4 shards gives each machine 100 tests — then workers on each machine run those 100 in parallel. You get horizontal scale <span class="text-white font-semibold">(shards)</span> and vertical scale <span class="text-white font-semibold">(workers)</span> at the same time.
+      Each shard can still use multiple workers internally. A suite of 400 tests split into 4 shards gives each machine 100 tests. Then workers on each machine run those 100 in parallel. You get horizontal scale <span class="text-white font-semibold">(shards)</span> and vertical scale <span class="text-white font-semibold">(workers)</span> at the same time.
     </div>
   </div>
 
@@ -1378,103 +1366,79 @@ layout: default
 
 # Why Design Patterns in Tests?
 
-<div class="text-center text-gray-500 text-sm mb-6 tracking-wide uppercase font-semibold">Test code is production code. It deserves the same respect.</div>
+<div class="text-center text-gray-500 text-sm mb-3 tracking-wide uppercase font-semibold">Test code is production code. It deserves the same respect.</div>
 
-<div class="grid grid-cols-4 gap-4 mt-2">
+<div class="grid grid-cols-4 gap-3 mt-1">
 
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#58a6ff]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-2xl mb-4">🏗️</div>
-  <div class="font-bold text-[#58a6ff] mb-2">Builder</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Construct test data step by step — readable, no copy-paste objects</div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">new UserBuilder()<br>.withRole('admin')<br>.build()</div>
-</div>
-
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#3fb950]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#3fb950]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#3fb950]/10 border border-[#3fb950]/30 flex items-center justify-center text-2xl mb-4">🏭</div>
-  <div class="font-bold text-[#3fb950] mb-2">Factory</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Centralize resource creation — one place to create, one place to clean up</div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">UserFactory.create()<br>OrderFactory.create()<br>// auto-teardown</div>
-</div>
-
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#ffa657]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#ffa657]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-2xl mb-4">🔀</div>
-  <div class="font-bold text-[#ffa657] mb-2">Strategy</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Swap behavior per environment — same tests run on tst, acc, prd</div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">AuthStrategy.for(env)<br>// config drives<br>// the difference</div>
-</div>
-
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#d2a8ff]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#d2a8ff]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-2xl mb-4">🎭</div>
-  <div class="font-bold text-[#d2a8ff] mb-2">Facade</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Wrap Playwright behind a clean interface — hide complexity from tests</div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">api.createUser()<br>db.seedProduct()<br>// no raw client</div>
-</div>
-
-</div>
-
-<div class="mt-5 flex items-center justify-center gap-2 bg-yellow-900/10 border border-yellow-500/25 rounded-xl px-5 py-3 text-xs text-yellow-200/80">
-  <span class="text-yellow-400 text-base">✦</span>
-  Consistent patterns let AI generate code that <strong class="text-white">fits your framework on the first try</strong>
-</div>
-
----
-layout: default
----
-
-# Patterns in Context
-
-<div class="text-center text-gray-500 text-sm mb-6 tracking-wide uppercase font-semibold">When to reach for each pattern</div>
-
-<div class="grid grid-cols-3 gap-4 mt-2">
-
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#58a6ff]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-2xl mb-4">🏗️</div>
-  <div class="font-bold text-[#58a6ff] mb-3">Builder</div>
-  <div class="space-y-2 w-full text-left">
-    <div class="bg-[#58a6ff]/5 border border-[#58a6ff]/15 rounded-lg px-3 py-2">
+<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#58a6ff]/60 transition-colors">
+  <div class="w-10 h-10 rounded-xl bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-xl mb-3">🏗️</div>
+  <div class="font-bold text-[#58a6ff] mb-1">Builder</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Construct test data step by step. Readable, no copy-paste objects</div>
+  <div class="space-y-1.5 w-full text-left mt-3">
+    <div class="bg-[#58a6ff]/5 border border-[#58a6ff]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#58a6ff]/60 font-semibold mb-0.5">Use when</div>
       <div class="text-xs text-gray-300">Test data has many optional fields</div>
     </div>
-    <div class="bg-white/3 border border-[#30363d] rounded-lg px-3 py-2">
+    <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
       <div class="text-xs text-gray-400">Defaults for everything, override only what matters</div>
     </div>
   </div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">new UserBuilder()<br>.asAdmin().build()</div>
 </div>
 
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#3fb950]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#3fb950]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#3fb950]/10 border border-[#3fb950]/30 flex items-center justify-center text-2xl mb-4">🏭</div>
-  <div class="font-bold text-[#3fb950] mb-3">Factory</div>
-  <div class="space-y-2 w-full text-left">
-    <div class="bg-[#3fb950]/5 border border-[#3fb950]/15 rounded-lg px-3 py-2">
+<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#3fb950]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#3fb950]/60 transition-colors">
+  <div class="w-10 h-10 rounded-xl bg-[#3fb950]/10 border border-[#3fb950]/30 flex items-center justify-center text-xl mb-3">🏭</div>
+  <div class="font-bold text-[#3fb950] mb-1">Factory</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Centralize resource creation. One place to create, one place to clean up</div>
+  <div class="space-y-1.5 w-full text-left mt-3">
+    <div class="bg-[#3fb950]/5 border border-[#3fb950]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#3fb950]/60 font-semibold mb-0.5">Use when</div>
       <div class="text-xs text-gray-300">Creating resources via API for preconditions</div>
     </div>
-    <div class="bg-white/3 border border-[#30363d] rounded-lg px-3 py-2">
+    <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
       <div class="text-xs text-gray-400">Fast setup, clean teardown, no UI dependency</div>
     </div>
   </div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">factory.createOrder(userId)<br>// auto-teardown</div>
 </div>
 
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#d2a8ff]/30 rounded-2xl p-5 flex flex-col items-center text-center hover:border-[#d2a8ff]/60 transition-colors">
-  <div class="w-12 h-12 rounded-xl bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-2xl mb-4">🎭</div>
-  <div class="font-bold text-[#d2a8ff] mb-3">Facade</div>
-  <div class="space-y-2 w-full text-left">
-    <div class="bg-[#d2a8ff]/5 border border-[#d2a8ff]/15 rounded-lg px-3 py-2">
+<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#ffa657]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#ffa657]/60 transition-colors">
+  <div class="w-10 h-10 rounded-xl bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-xl mb-3">🔀</div>
+  <div class="font-bold text-[#ffa657] mb-1">Strategy</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Swap behavior per environment. Same tests run on tst, acc, prd</div>
+  <div class="space-y-1.5 w-full text-left mt-3">
+    <div class="bg-[#ffa657]/5 border border-[#ffa657]/15 rounded-lg px-2.5 py-1.5">
+      <div class="text-[10px] uppercase tracking-widest text-[#ffa657]/60 font-semibold mb-0.5">Use when</div>
+      <div class="text-xs text-gray-300">Auth or config differs between environments</div>
+    </div>
+    <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
+      <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
+      <div class="text-xs text-gray-400">One test suite, zero environment-specific branches</div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#d2a8ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#d2a8ff]/60 transition-colors">
+  <div class="w-10 h-10 rounded-xl bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-xl mb-3">🎭</div>
+  <div class="font-bold text-[#d2a8ff] mb-1">Facade</div>
+  <div class="text-xs text-gray-400 leading-relaxed">Wrap Playwright behind a clean interface. Hide complexity from tests</div>
+  <div class="space-y-1.5 w-full text-left mt-3">
+    <div class="bg-[#d2a8ff]/5 border border-[#d2a8ff]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#d2a8ff]/60 font-semibold mb-0.5">Use when</div>
       <div class="text-xs text-gray-300">Wrapping Playwright API or external services</div>
     </div>
-    <div class="bg-white/3 border border-[#30363d] rounded-lg px-3 py-2">
+    <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
       <div class="text-xs text-gray-400">Tests stay clean, complexity stays hidden</div>
     </div>
   </div>
-  <div class="mt-4 pt-3 border-t border-[#30363d] w-full text-[10px] font-mono text-gray-600">userApi.create(data)<br>// no raw client</div>
 </div>
 
+</div>
+
+<div class="mt-3 flex items-center justify-center gap-2 bg-yellow-900/10 border border-yellow-500/25 rounded-xl px-5 py-2.5 text-xs text-yellow-200/80">
+  <span class="text-yellow-400 text-base">✦</span>
+  Consistent patterns let AI generate code that <strong class="text-white">fits your framework on the first try</strong>
 </div>
 
 ---
@@ -1520,7 +1484,7 @@ layout: section
 # 🤖 AI Tips & Agents
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
-  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Teach the AI Your Patterns — It Will Follow Them at Scale"</span>
+  <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Teach the AI Your Patterns. It Will Follow Them at Scale"</span>
 </div>
 
 ---
