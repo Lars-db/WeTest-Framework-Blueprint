@@ -1481,7 +1481,7 @@ layout: section
 
 <div class="font-mono text-[#3fb950] text-sm mb-4">$ cat CLAUDE.md | grep -i "pattern\|fixture\|page-object"</div>
 
-# 🤖 AI Tips & Agents
+# 🤖 AI Tips & Tricks
 
 <div class="font-mono text-sm mt-8 bg-[#0d1117] border border-[#30363d] rounded-lg px-6 py-4 max-w-2xl mx-auto text-left">
   <span class="text-[#3fb950]">#</span> <span class="text-gray-300 italic">"Teach the AI Your Patterns. It Will Follow Them at Scale"</span>
