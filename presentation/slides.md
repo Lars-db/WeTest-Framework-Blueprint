@@ -29,6 +29,52 @@ background: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&q=8
   <span class="text-[#3fb950]">$</span> wetest-conference --year 2026 --location athens 🇬🇷
 </div>
 
+<audio ref="audioEl" loop></audio>
+
+<div class="absolute bottom-8 right-8 flex items-center gap-1">
+  <button @click="prevTrack" class="font-mono text-xs bg-[#161b22] border border-[#30363d] hover:border-[#3fb950]/60 text-gray-500 hover:text-[#3fb950] rounded px-3 py-1.5 transition-all cursor-pointer">⏮</button>
+  <button @click="togglePlay" class="font-mono text-xs bg-[#161b22] border border-[#30363d] hover:border-[#3fb950]/60 text-gray-500 hover:text-[#3fb950] rounded px-3 py-1.5 transition-all cursor-pointer">{{ isPlaying ? '⏸' : '▶' }}</button>
+  <button @click="nextTrack" class="font-mono text-xs bg-[#161b22] border border-[#30363d] hover:border-[#3fb950]/60 text-gray-500 hover:text-[#3fb950] rounded px-3 py-1.5 transition-all cursor-pointer">⏭</button>
+</div>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const playlist = [
+  './audio/intro.mp3',
+  './audio/ACDC - Hells Bells (LyricsHQ).mp3',
+  './audio/Rock You Like a Hurricane (2011).mp3',
+]
+
+const audioEl = ref(null)
+const currentIndex = ref(0)
+const isPlaying = ref(false)
+
+onMounted(() => {
+  audioEl.value.addEventListener('play', () => isPlaying.value = true)
+  audioEl.value.addEventListener('pause', () => isPlaying.value = false)
+})
+
+function loadTrack(index) {
+  currentIndex.value = ((index % playlist.length) + playlist.length) % playlist.length
+  const wasPlaying = isPlaying.value
+  audioEl.value.src = playlist[currentIndex.value]
+  audioEl.value.load()
+  if (wasPlaying) audioEl.value.play()
+}
+
+function togglePlay() {
+  if (!audioEl.value.src) {
+    audioEl.value.src = playlist[currentIndex.value]
+    audioEl.value.load()
+  }
+  audioEl.value.paused ? audioEl.value.play() : audioEl.value.pause()
+}
+
+function prevTrack() { loadTrack(currentIndex.value - 1) }
+function nextTrack() { loadTrack(currentIndex.value + 1) }
+</script>
+
 ---
 layout: center
 ---
