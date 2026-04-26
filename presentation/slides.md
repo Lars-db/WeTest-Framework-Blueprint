@@ -1737,11 +1737,11 @@ class: text-center
     </div>
     <div class="flex items-center gap-2 text-sm text-gray-400">
       <ph-buildings class="text-base text-[#d2a8ff] shrink-0" />
-      <span>Company website: <code class="text-[#d2a8ff]">polteq.nl</code></span>
+      <span>Company website: <code class="text-[#d2a8ff]">polteq.com</code></span>
     </div>
     <div class="flex items-center gap-2 text-sm text-gray-400">
       <ph-globe class="text-base text-[#d2a8ff] shrink-0" />
-      <span>Personal website: <code class="text-[#d2a8ff]">testbaas.nl</code></span>
+      <span>Personal website: <code class="text-[#d2a8ff]">thetestboss.com</code></span>
     </div>
   </div>
 </div>
