@@ -1,9 +1,9 @@
 import { test as baseTest, Browser, Page } from '@playwright/test';
 import { AssertionHelper } from '../helpers/assertionHelper';
-import { SharedComponents } from '../../pages/sharedComponents';
-import { HomePage } from '../../pages/homePage';
-import { LoginPage } from '../../pages/loginPage';
-import { ChatPage } from '../../pages/chatPage';
+import { SharedComponents } from '../../pages/shared.components';
+import { HomePage } from '../../pages/home.page';
+import { LoginPage } from '../../pages/login.page';
+import { ChatPage } from '../../pages/chat.page';
 import { createLogger } from '../logger';
 import type { Logger } from 'winston';
 

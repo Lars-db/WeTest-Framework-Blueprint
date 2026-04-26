@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(mv basePage.ts base.page.ts)",
+      "Bash(mv loginPage.ts login.page.ts)",
+      "Bash(mv homePage.ts home.page.ts)",
+      "Bash(mv chatPage.ts chat.page.ts)",
+      "Bash(mv sharedComponents.ts shared.components.ts)"
     ]
   }
 }

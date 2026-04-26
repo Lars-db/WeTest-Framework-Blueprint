@@ -179,17 +179,16 @@ import { test } from '../../support/utils/fixtures/testFixture';
 
 This gives access to: `page`, `assertionHelper`, `sharedComponents`, `homePage`, `loginPage`, `chatPage`, `logger`.
 
-### Page Object Model pattern (`loginPage.ts` is the reference)
+### Page Object Model pattern (`login.page.ts` is the reference)
 
 ```ts
-export class LoginPage {
-    readonly page: Page;
+export class LoginPage extends BasePage {
     readonly usernameInput: Locator;
 
-    constructor(page: Page, language = process.env.LANGUAGE || 'en') {
-        this.page = page;
-        const t = getTranslations(language).loginPage;
-        this.usernameInput = page.getByRole('textbox', { name: t.usernameInput });
+    constructor(page: Page, language?: string) {
+        super(page, language);
+        const t = this.t.loginPage;
+        this.usernameInput = this.page.getByRole('textbox', { name: t.usernameInput });
     }
 
     async enterLoginCredentials(username: string, password: string) {
@@ -217,7 +216,7 @@ Run `/skill-name` to invoke. Invoke the **Skill tool** when a user request match
 | `/api-test` | "write API tests for X" | `tests/api/{resource}.spec.ts` |
 | `/endpoint` | "add the X endpoint env var" | Entry in `.env.tst` + `.env.acc` |
 | `/zod-validate` | "add Zod validation to X tests" | Adds safeParse steps to existing specs |
-| `/pom` | "create a page object for X" | `support/pages/{name}Page.ts` + fixture wiring |
+| `/pom` | "create a page object for X" | `support/pages/{name}.page.ts` + fixture wiring |
 | `/slidev` | "update/present the slides" | `presentation/slides.md` |
 
 Skill files live in `.claude/skills/{name}/SKILL.md`.
