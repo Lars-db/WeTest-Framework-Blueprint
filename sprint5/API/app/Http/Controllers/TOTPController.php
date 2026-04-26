@@ -19,6 +19,7 @@ class TOTPController extends Controller
     /**
      * @OA\Post(
      *     path="/totp/setup",
+     *     operationId="setupTotp",
      *     summary="Setup TOTP for the authenticated user",
      *     description="Generates a TOTP secret and QR code URL for the user to scan and enables TOTP setup.",
      *     tags={"TOTP"},
@@ -56,6 +57,7 @@ class TOTPController extends Controller
     /**
      * @OA\Post(
      *     path="/totp/verify",
+     *     operationId="verifyTotp",
      *     summary="Verify TOTP code for the authenticated user",
      *     description="Validates the submitted TOTP code and enables TOTP if verification is successful.",
      *     tags={"TOTP"},
