@@ -1,8 +1,6 @@
 <?php
-// Copyright (c) 2024-2026 Testsmith. All rights reserved.
-// See LICENSE for details.
 
-namespace App\Http\Requests\Invoice;
+namespace app\Http\Requests\Invoice;
 
 use App\Http\Requests\BaseFormRequest;
 use App\Rules\SubscriptSuperscriptRule;

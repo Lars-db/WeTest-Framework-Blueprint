@@ -1,12 +1,9 @@
-// Copyright (c) 2024-2026 Testsmith. All rights reserved.
-// See LICENSE for details.
-
 import {provideTransloco, TranslocoModule} from '@jsverse/transloco';
 import {NgModule} from '@angular/core';
 import {TranslocoHttpLoader} from './transloco-loader';
 import {environment} from '../environments/environment';
 
-const availableLangs = ['de', 'el', 'en', 'fr', 'es', 'nl', 'tr'];
+const availableLangs = ['de', 'en', 'fr', 'es', 'nl', 'tr'];
 
 function getDefaultLanguage(): string {
   // First check if user has explicitly set a language preference

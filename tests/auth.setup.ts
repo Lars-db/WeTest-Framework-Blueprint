@@ -43,7 +43,7 @@ setup('authenticate as admin', async ({ page }) => {
     await page.locator('[data-test="login-submit"]').click();
 
     // eslint-disable-next-line playwright/no-standalone-expect
-    await expect(page).toHaveURL(/account/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/admin/, { timeout: 10_000 });
 
     await page.context().storageState({ path: path.join(authDir, 'admin.json') });
     console.log('Setup: admin auth state saved.');

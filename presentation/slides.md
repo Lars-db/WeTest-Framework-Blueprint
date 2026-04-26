@@ -575,7 +575,7 @@ layout: center
       <div class="pl-4 text-gray-500">
         <span class="text-[#58a6ff]">login.page.ts</span>
         <span class="mx-3 text-gray-700">·</span>
-        <span class="text-[#58a6ff]">dashboard.page.ts</span>
+        <span class="text-[#58a6ff]">home.page.ts</span>
         <span class="mx-3 text-gray-700">·</span>
         <span class="text-[#58a6ff]">base.page.ts</span>
       </div>
@@ -592,7 +592,7 @@ layout: center
 layout: section
 ---
 
-<div class="font-mono text-[#3fb950] text-sm mb-4">$ npx playwright test --workers=auto</div>
+<div class="font-mono text-[#3fb950] text-sm mb-4">$ npx playwright test --workers=50%</div>
 
 # ⚡ Parallel Tests & Workers
 

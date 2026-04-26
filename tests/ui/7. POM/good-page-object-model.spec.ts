@@ -19,6 +19,8 @@ import { expect } from '@playwright/test';
  */
 
 test.describe('Search functionality using POM', () => {
+    // For this test I want to be signed out. So no cookies or origins from previous sessions should be loaded.
+    test.use({ storageState: { cookies: [], origins: [] } });
 
     test('should find results for a valid search query', async ({ homePage }) => {
         // Step 1: Use a Page Object method to navigate
