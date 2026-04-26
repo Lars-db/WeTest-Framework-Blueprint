@@ -15,6 +15,7 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('Support Chat Agent - Good Pattern', () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
@@ -27,7 +28,8 @@ test.describe('Support Chat Agent - Good Pattern', () => {
     // 1. Select 'Support' from main menu
     await page.locator('[data-test="chat-action-support-ticket"]').click();
     
-    // 2. Fill in guest details (simulating agent providing info)
+    // 2. Wait for bot to finish responding before filling input
+    await expect(page.locator('[data-test="chat-input"]')).toBeEnabled();
     await page.locator('[data-test="chat-input"]').fill('Agent');
     await page.locator('[data-test="chat-send"]').click();
     

@@ -12,6 +12,7 @@ import { expect } from '@playwright/test';
  */
 
 test.describe('Support Chat - Fixed Patterns', () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
 
   test('generic chat test', async ({ page, chatPage }) => {
     await page.goto('/');

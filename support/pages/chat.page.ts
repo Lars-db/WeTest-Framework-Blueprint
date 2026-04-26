@@ -16,15 +16,15 @@ export class ChatPage extends BasePage {
         super(page, language);
         const t = this.t.chatPage;
 
-        this.toggleButton = this.page.getByRole('button', { name: t.toggleButton });
-        this.chatWindow = this.page.getByRole('dialog', { name: t.chatWindow });
-        this.supportTicketButton = this.page.getByRole('button', { name: t.supportTicketButton });
-        this.chatInput = this.page.getByRole('textbox', { name: t.chatInput });
-        this.sendButton = this.page.getByRole('button', { name: t.sendButton });
-        this.selectSubjectButton = this.page.getByRole('button', { name: t.selectSubjectButton });
-        this.skipAttachmentButton = this.page.getByRole('button', { name: t.skipAttachmentButton });
-        this.backToMenuButton = this.page.getByRole('button', { name: t.backToMenuButton });
-        this.botMessages = this.page.getByRole('log', { name: t.botMessage });
+        this.toggleButton = this.page.getByTestId('chat-toggle');
+        this.chatWindow = this.page.getByTestId('chat-window');
+        this.supportTicketButton = this.page.getByTestId('chat-action-support-ticket');
+        this.chatInput = this.page.getByTestId('chat-input');
+        this.sendButton = this.page.getByTestId('chat-send');
+        this.selectSubjectButton = this.page.getByTestId('chat-action-select-subject');
+        this.skipAttachmentButton = this.page.getByTestId('chat-action-skip-attachment');
+        this.backToMenuButton = this.page.getByTestId('chat-action-back-to-menu');
+        this.botMessages = this.page.locator('.bot-message');
     }
 
     async open() {

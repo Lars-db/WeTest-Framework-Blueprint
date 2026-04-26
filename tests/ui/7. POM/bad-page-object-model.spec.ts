@@ -19,6 +19,7 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('Search functionality (BAD POM)', () => {
+    test.use({ storageState: { cookies: [], origins: [] } });
 
     test('should search for a product (Brittle version)', async ({ page }) => {
         // BAD: Hardcoded URL

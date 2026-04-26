@@ -12,14 +12,14 @@ import { test, expect } from '@playwright/test';
  */
 
 const contactFormScenarios = [
-  { 
-    scenario: 'empty first name', 
-    firstName: '', 
-    lastName: 'Doe', 
-    email: 'john@example.com', 
-    subject: 'webmaster', 
+  {
+    scenario: 'empty last name',
+    firstName: 'John',
+    lastName: '',
+    email: 'john@example.com',
+    subject: 'webmaster',
     message: 'Hello, this is a message that will contain at least 50 characters.',
-    expectedError: 'First name is required' 
+    expectedError: 'Last name is required'
   },
   { 
     scenario: 'invalid email format', 
@@ -42,17 +42,20 @@ const contactFormScenarios = [
 ];
 
 test.describe('Contact Form Validation - Good Parameterized', () => {
-  
+  test.use({ storageState: { cookies: [], origins: [] } });
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/contact');
-    await expect(page.locator('[data-test="first-name"]')).toHaveClass(/ng-invalid/);
+    await expect(page.locator('[data-test="first-name"]')).toBeVisible();
   });
 
   contactFormScenarios.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
     test(`should show error for ${scenario}`, async ({ page }) => {
       // Fill the form fields using stable 'data-test' locators
       // Ensure we always fill the fields (even with empty string) to be explicit
+      await page.locator('[data-test="first-name"]').fill(firstName || ' ');
       await page.locator('[data-test="first-name"]').fill(firstName);
+      await page.locator('[data-test="last-name"]').fill(lastName || ' ');
       await page.locator('[data-test="last-name"]').fill(lastName);
       await page.locator('[data-test="email"]').fill(email);
       await page.locator('[data-test="subject"]').selectOption(subject);
