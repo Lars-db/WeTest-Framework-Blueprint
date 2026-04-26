@@ -546,6 +546,9 @@ Contributions are welcome! To contribute to this blueprint:
 ## License
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+The code in the folder "sprint5" is from https://practicesoftwaretesting.com/ and is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Be aware that we use revision 7d46e7eac1e8166ad9a3642e5a496fa947ff94ed of the Git repository (https://github.com/testsmith-io/practice-software-testing).
+This is the last version that is commited under the MIT License.
 
 ---
 
