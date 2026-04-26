@@ -1545,11 +1545,11 @@ layout: default
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#ffa657]/30 rounded-xl p-3.5 flex flex-col hover:border-[#ffa657]/60 transition-colors">
   <div class="flex items-center gap-2 mb-2">
-    <div class="w-7 h-7 rounded-md bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-sm">📡</div>
-    <div class="font-mono font-bold text-[#ffa657] text-xs">openapi.json</div>
+    <div class="w-7 h-7 rounded-md bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-sm">🔌</div>
+    <div class="font-mono font-bold text-[#ffa657] text-xs">MCP</div>
   </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">API contract schema. AI reads endpoint shapes and response types to generate correct tests without hallucinating field names.</div>
-  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">ground truth for API test generation</div>
+  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Model Context Protocol. Gives AI direct access to tools, APIs, and live data — no copy-pasting context, no stale snapshots.</div>
+  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">real-time context for AI tooling</div>
 </div>
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-xl p-3.5 flex flex-col hover:border-[#58a6ff]/60 transition-colors">
