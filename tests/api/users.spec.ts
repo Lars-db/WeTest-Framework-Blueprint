@@ -15,7 +15,53 @@ import { UserFactory, UserRole } from '../../support/utils/factories/userFactory
  * Solution: UserBuilder provides sensible defaults. Each test only overrides
  * the fields relevant to what it is verifying.
  */
-test.describe('User registration — Builder pattern', () => {
+
+/**
+ * WITHOUT BUILDER — every test carries the full object.
+ *
+ * Downsides:
+ * 1. All 10+ fields repeated in every test — noise hides the intent.
+ * 2. Password policy changes → update every inline object across every file.
+ * 3. Reader must scan the whole object to spot what this test actually cares about.
+ * 4. Copy-paste errors silently propagate wrong defaults.
+ */
+test.describe('User registration — without Builder (bad)', () => {
+    let createdId: string;
+
+    test.afterEach(async ({ request }) => {
+        if (!createdId) return;
+        const token = await new AdminAuthStrategy().getToken(request);
+        await UserApiHelper.delete(request, createdId, token);
+        createdId = '';
+    });
+
+    test('registers a user with a custom name — BAD: full object repeated', async ({ request }) => {
+        const result = await UserApiHelper.register(request, {
+            first_name: 'Alice',       // ← the only field this test cares about
+            last_name: 'Smith',        // ← and this one
+            email: `alice.smith+${Date.now()}@example.com`,
+            password: 'WeT3st!Fr@mework2026',
+            dob: '1990-01-01',
+            phone: '0612345678',
+            address: {
+                street: 'Test Street 1',
+                city: 'Amsterdam',
+                state: 'Noord-Holland',
+                country: 'Netherlands',
+                postal_code: '1234AB',
+            },
+        });
+
+        expect(result.status).toBe(HttpStatus.CREATED);
+        createdId = result.body.id;
+    });
+
+});
+
+/**
+ * WITH BUILDER — each test states only what it cares about.
+ */
+test.describe('User registration — Builder pattern (good)', () => {
     let createdId: string;
 
     test.afterEach(async ({ request }) => {
@@ -64,6 +110,65 @@ test.describe('User registration — Builder pattern', () => {
  * Solution: AuthStrategy encapsulates how each role acquires a token. Swapping
  * roles is a one-line change. The test body stays identical.
  */
+
+/**
+ * WITHOUT STRATEGY — token acquisition logic duplicated in every test.
+ *
+ * Downsides:
+ * 1. Login URL, credentials, and header construction repeated in every test.
+ * 2. Switching a test to a different role means touching multiple lines.
+ * 3. If the login flow changes (e.g. MFA added), every test breaks.
+ * 4. Test intent — "can customer delete?" — buried under auth boilerplate.
+ */
+test.describe('User deletion — without Strategy (bad)', () => {
+    let userId: string;
+
+    test.beforeEach(async ({ request }) => {
+        const result = await UserApiHelper.register(request, new UserBuilder().build());
+        userId = result.body.id;
+    });
+
+    test.afterEach(async ({ request }) => {
+        if (!userId) return;
+        const loginResponse = await request.post(
+            `${process.env.API_BASE_URL}${process.env.USERS_ENDPOINT}/login`,
+            { data: { email: 'admin@practicesoftwaretesting.com', password: 'welcome01' } },
+        );
+        const { access_token } = await loginResponse.json();
+        await UserApiHelper.delete(request, userId, access_token).catch(() => {});
+        userId = '';
+    });
+
+    test('admin can delete a user — BAD: auth logic inline', async ({ request }) => {
+        const loginResponse = await request.post(
+            `${process.env.API_BASE_URL}${process.env.USERS_ENDPOINT}/login`,
+            { data: { email: 'admin@practicesoftwaretesting.com', password: 'welcome01' } },
+        );
+        const { access_token } = await loginResponse.json();
+
+        const result = await UserApiHelper.delete(request, userId, access_token);
+        expect(result.status).toBe(HttpStatus.NO_CONTENT);
+        userId = '';
+    });
+
+    test('customer cannot delete a user — BAD: auth logic inline', async ({ request }) => {
+        const loginResponse = await request.post(
+            `${process.env.API_BASE_URL}${process.env.USERS_ENDPOINT}/login`,
+            { data: { email: 'customer@practicesoftwaretesting.com', password: 'welcome01' } },
+        );
+        const { access_token } = await loginResponse.json();
+
+        const result = await UserApiHelper.delete(request, userId, access_token);
+        expect(result.status).toBe(HttpStatus.FORBIDDEN);
+    });
+
+});
+
+/**
+ * WITH STRATEGY — role decision isolated behind an interface.
+ * Swap `new AdminAuthStrategy()` ↔ `new CustomerAuthStrategy()` to change role.
+ * The login flow lives in one place only.
+ */
 const roles: { role: UserRole; strategy: AuthStrategy }[] = [
     { role: 'customer', strategy: new CustomerAuthStrategy() },
     { role: 'admin',    strategy: new AdminAuthStrategy()    },
@@ -75,7 +180,7 @@ test.describe('User profile — Strategy pattern', () => {
         test(`${role} retrieves own profile`, async ({ request }) => {
             const token = await strategy.getToken(request);
 
-            const { body: profile, status } = await test.step(`GET /users/me as ${role}`, async () => {
+            const { body: profile } = await test.step(`GET /users/me as ${role}`, async () => {
                 const result = await UserApiHelper.getMe(request, token);
                 expect(result.status).toBe(HttpStatus.OK);
                 return result;
