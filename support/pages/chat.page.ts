@@ -14,7 +14,6 @@ export class ChatPage extends BasePage {
 
     constructor(page: Page, language?: string) {
         super(page, language);
-        const t = this.t.chatPage;
 
         this.toggleButton = this.page.getByTestId('chat-toggle');
         this.chatWindow = this.page.getByTestId('chat-window');
