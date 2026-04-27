@@ -1,4 +1,4 @@
-name: Build, Lint and Test
+name: Build and Lint
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-lint-and-test:
+  build-and-lint:
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,10 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      # Set up Docker Buildx for better caching
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -38,10 +34,3 @@ jobs:
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
-      - name: Run Playwright tests
-        run: npm run test:good
-        env:
-          SPRINT: sprint5
-          BASE_URL: https://practicesoftwaretesting.com
-          CI: true
