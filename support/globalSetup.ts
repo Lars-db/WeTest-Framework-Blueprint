@@ -65,6 +65,8 @@ async function globalSetup() {
         execSync('docker compose exec laravel-api php artisan migrate:fresh --seed', { stdio: 'inherit' });
     }
 
+    fs.writeFileSync('.playwright-start', Date.now().toString(), 'utf-8');
+
     console.log('Global setup: Initializing database connections...');
     // await DbHelper.initializeConnections();
 }

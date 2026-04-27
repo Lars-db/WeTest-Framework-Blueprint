@@ -53,21 +53,20 @@ test.describe('Contact Form Validation - Good Parameterized', () => {
     test(`should show error for ${scenario}`, async ({ page }) => {
       // Fill the form fields using stable 'data-test' locators
       // Ensure we always fill the fields (even with empty string) to be explicit
-      await page.locator('[data-test="first-name"]').fill(firstName || ' ');
       await page.locator('[data-test="first-name"]').fill(firstName);
-      await page.locator('[data-test="last-name"]').fill(lastName || ' ');
+      await page.locator('[data-test="first-name"]').press('Tab');
       await page.locator('[data-test="last-name"]').fill(lastName);
+      await page.locator('[data-test="last-name"]').press('Tab');
       await page.locator('[data-test="email"]').fill(email);
+      await page.locator('[data-test="email"]').press('Tab');
       await page.locator('[data-test="subject"]').selectOption(subject);
       await page.locator('[data-test="message"]').fill(message);
+      await page.locator('[data-test="message"]').press('Tab');
 
-      // Submit the form
-      // FIX: Ensure button is enabled and visible before clicking to reduce flakiness
+      // Wait for Angular to process all validators before submitting
+      await expect(page.locator('form')).toHaveClass(/ng-invalid/);
+
       const submitButton = page.locator('[data-test="contact-submit"]');
-      await expect(submitButton).toBeEnabled();
-      
-      // Some applications have a slight delay before the event listener is attached.
-      // We can click and retry or wait for the error message to appear with a longer timeout.
       await submitButton.click();
 
       // Verify the expected error message is visible

@@ -52,13 +52,17 @@ test.describe('Contact Form Validation - Fixed Parameterized', () => {
   data.forEach(({ scenario, firstName, lastName, email, subject, message, expectedError }) => {
     test(`should show error for ${scenario}`, async ({ page }) => {
       // FIX: Explicitly fill all fields (including empty ones) to avoid residue
-      await page.locator('[data-test="first-name"]').fill(firstName || ' ');
       await page.locator('[data-test="first-name"]').fill(firstName);
-      await page.locator('[data-test="last-name"]').fill(lastName || ' ');
+      await page.locator('[data-test="first-name"]').press('Tab');
       await page.locator('[data-test="last-name"]').fill(lastName);
+      await page.locator('[data-test="last-name"]').press('Tab');
       await page.locator('[data-test="email"]').fill(email);
+      await page.locator('[data-test="email"]').press('Tab');
       await page.locator('[data-test="subject"]').selectOption(subject);
       await page.locator('[data-test="message"]').fill(message);
+      await page.locator('[data-test="message"]').press('Tab');
+
+      await expect(page.locator('form')).toHaveClass(/ng-invalid/);
 
       // FIX: Using stable 'data-test' locator for submit
       const submitButton = page.locator('[data-test="contact-submit"]');
