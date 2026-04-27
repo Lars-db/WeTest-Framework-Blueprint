@@ -670,7 +670,7 @@ layout: center
       <span class="ml-auto text-xs text-gray-500 tracking-wide">bash — wetest-slidev</span>
     </div>
     <div class="bg-[#0d1117] px-6 py-5 leading-8">
-      <div><span class="text-[#3fb950]">$</span> <span class="text-white">npx playwright test --workers=auto</span></div>
+      <div><span class="text-[#3fb950]">$</span> <span class="text-white">npx playwright test --workers=50%</span></div>
     </div>
   </div>
 
@@ -684,7 +684,7 @@ layout: center
 layout: section
 ---
 
-<div class="font-mono text-[#3fb950] text-sm mb-4">$ cat tests/.auth/user.json | jq '.cookies | length'</div>
+<div class="font-mono text-[#3fb950] text-sm mb-4">$ cat tests/.auth/customer.json | jq '.origins | length'</div>
 
 # 💾 Storage State
 
