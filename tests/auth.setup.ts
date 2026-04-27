@@ -1,6 +1,7 @@
-import { test as setup, expect } from '@playwright/test';
+import { test as setup, expect, Page } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { UserFactory, UserRole } from '../support/utils/factories/userFactory';
 
 /**
  * AUTH SETUP
@@ -19,32 +20,30 @@ import path from 'path';
 
 const authDir = path.join('tests', '.auth');
 
+const roles: { role: UserRole; redirectPattern: RegExp }[] = [
+    { role: 'customer', redirectPattern: /account/ },
+    { role: 'admin',    redirectPattern: /admin/   },
+];
+
+async function loginAndSave(page: Page, role: UserRole, redirectPattern: RegExp) {
+    const { email, password } = UserFactory.byRole(role);
+    await page.goto('/auth/login');
+    await page.locator('[data-test="email"]').fill(email);
+    await page.locator('[data-test="password"]').fill(password);
+    await page.locator('[data-test="login-submit"]').click();
+
+    await expect(page).toHaveURL(redirectPattern, { timeout: 10_000 });
+
+    await page.context().storageState({ path: path.join(authDir, `${role}.json`) });
+    console.log(`Setup: ${role} auth state saved.`);
+}
+
 setup.beforeAll(() => {
     fs.mkdirSync(authDir, { recursive: true });
 });
 
-setup('authenticate as customer', async ({ page }) => {
-    await page.goto('/auth/login');
-    await page.locator('[data-test="email"]').fill('customer@practicesoftwaretesting.com');
-    await page.locator('[data-test="password"]').fill('welcome01');
-    await page.locator('[data-test="login-submit"]').click();
-
-    // eslint-disable-next-line playwright/no-standalone-expect
-    await expect(page).toHaveURL(/account/, { timeout: 10_000 });
-
-    await page.context().storageState({ path: path.join(authDir, 'customer.json') });
-    console.log('Setup: customer auth state saved.');
-});
-
-setup('authenticate as admin', async ({ page }) => {
-    await page.goto('/auth/login');
-    await page.locator('[data-test="email"]').fill('admin@practicesoftwaretesting.com');
-    await page.locator('[data-test="password"]').fill('welcome01');
-    await page.locator('[data-test="login-submit"]').click();
-
-    // eslint-disable-next-line playwright/no-standalone-expect
-    await expect(page).toHaveURL(/admin/, { timeout: 10_000 });
-
-    await page.context().storageState({ path: path.join(authDir, 'admin.json') });
-    console.log('Setup: admin auth state saved.');
+roles.forEach(({ role, redirectPattern }) => {
+    setup(`authenticate as ${role}`, async ({ page }) => {
+        await loginAndSave(page, role, redirectPattern);
+    });
 });

@@ -30,7 +30,7 @@ export class UserBuilder {
         first_name: 'Test',
         last_name: 'User',
         email: `testuser+${Date.now()}@example.com`,
-        password: 'Test@12345!',
+        password: 'WeT3st!Fr@mework2026',
         dob: '1990-01-01',
         phone: '0612345678',
         address: {

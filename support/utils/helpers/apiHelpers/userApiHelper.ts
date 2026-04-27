@@ -26,6 +26,7 @@ import { UserBuilder } from '../../builders/userBuilder';
 
 type LoginCredentials = { email: string; password: string };
 type TokenResponse    = { access_token: string; token_type: string; expires_in: number };
+type UserProfile      = { id: string; email: string; first_name: string; last_name: string };
 
 async function resolve<T>(call: Promise<APIResponse>): Promise<ApiResult<T>> {
     const res = await call;
@@ -44,7 +45,7 @@ export abstract class UserApiHelper {
         return resolve(request.post(`${base()}/register`, { data }));
     }
 
-    static getMe(request: APIRequestContext, token: string): Promise<ApiResult<unknown>> {
+    static getMe(request: APIRequestContext, token: string): Promise<ApiResult<UserProfile>> {
         return resolve(request.get(`${base()}/me`, {
             headers: { Authorization: `Bearer ${token}` },
         }));
