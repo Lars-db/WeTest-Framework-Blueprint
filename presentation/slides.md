@@ -336,6 +336,11 @@ layout: center
 
 </div>
 
+<!--
+Go to the folders /tests and /support
+Show the folder structure and explain the different folders globally. We will explain some things in depth later on.
+-->
+
 ---
 layout: section
 ---
@@ -434,6 +439,10 @@ layout: center
   </div>
 
 </div>
+
+<!--
+Open playwright.config.ts. Look for the ❗️and explain each of them.
+-->
 
 ---
 layout: section
@@ -588,6 +597,10 @@ layout: center
 
 </div>
 
+<!--
+Open the support/pages and show a few pages and explain how they are build up. Show how you can use the language in a way that you can support multiple languages.
+-->
+
 ---
 layout: section
 ---
@@ -679,6 +692,12 @@ layout: center
   </div>
 
 </div>
+
+<!--
+Explain that by default, test files are run in parallel. Tests in a single file are run in order, in the same worker process.
+You can configure entire test run to concurrently execute all tests in all files using this option (fullyParallel : true).
+Then also explain something about the workers.
+-->
 
 ---
 layout: section
@@ -846,6 +865,14 @@ layout: center
   </div>
 
 </div>
+
+<!--
+Show that in the setup we create a customer.json and an admin.json. Using the storageState in the playwright.config.ts, we can tell the test under which user it should run.
+You can override it like this:
+test.use({ storageState: path.join('tests', '.auth', 'customer.json') });
+Or empty it like:
+test.use({ storageState: { cookies: [], origins: [] } });
+-->
 
 ---
 layout: section

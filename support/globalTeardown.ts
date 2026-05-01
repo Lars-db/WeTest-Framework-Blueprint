@@ -7,15 +7,8 @@ async function globalTeardown() {
     // 1. Remove auth state files that may contain sensitive session tokens
     const authDir = path.join('tests', '.auth');
     if (fs.existsSync(authDir)) {
-        const authFiles = fs.readdirSync(authDir).filter(f => f.endsWith('.json'));
-        if (authFiles.length > 0) {
-            authFiles.forEach(file => {
-                fs.rmSync(path.join(authDir, file));
-                console.log(`Global teardown: Removed auth state file → ${path.join(authDir, file)}`);
-            });
-        } else {
-            console.log('Global teardown: No auth state files to remove.');
-        }
+        fs.rmSync(authDir, { recursive: true, force: true });
+        console.log(`Global teardown: Removed auth dir → ${authDir}`);
     }
 
     // 2. Close database connections
