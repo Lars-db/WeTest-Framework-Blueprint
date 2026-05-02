@@ -24,7 +24,7 @@ export default defineConfig({
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on CI only */
-    retries: process.env.CI ? 2 : 0,
+    retries: process.env.CI ? 1 : 0,
     /* Opt out of parallel tests on CI. */
     workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -84,7 +84,7 @@ export default defineConfig({
                   // ❗Auth state saved by tests/auth.setup.ts — every test in this
                   // project starts as a logged-in customer. Tests that need a
                   // different role can be overridden with test.use({ storageState }).
-                storageState: 'playwright/.auth/user.json',
+                storageState: 'tests/.auth/customer.json',
               },
               dependencies: ['setup'],
             },

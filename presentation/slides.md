@@ -392,7 +392,7 @@ layout: default
   <div class="text-sm font-mono text-gray-300 space-y-1">
     <div><span class="text-[#ffa657]">testIdAttribute</span>: <span class="text-[#a5d6ff]">'data-test'</span></div>
     <div><span class="text-[#ffa657]">trace</span>: <span class="text-[#a5d6ff]">'on'</span></div>
-    <div><span class="text-[#ffa657]">retries</span>: <span class="text-[#d2a8ff]">CI</span> ? <span class="text-[#79c0ff]">2</span> : <span class="text-[#79c0ff]">1</span></div>
+    <div><span class="text-[#ffa657]">retries</span>: <span class="text-[#d2a8ff]">CI</span> ? <span class="text-[#79c0ff]">1</span> : <span class="text-[#79c0ff]">0</span></div>
   </div>
 </div>
 
@@ -406,6 +406,7 @@ layout: default
 </div>
 
 </div>
+
 ---
 layout: center
 ---
