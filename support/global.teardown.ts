@@ -1,7 +1,8 @@
+import { test as teardown } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
-async function globalTeardown() {
+teardown('global teardown', async () => {
     console.log('\n── Global Teardown ──────────────────────────────────');
 
     // 1. Remove auth state files that may contain sensitive session tokens
@@ -37,6 +38,4 @@ async function globalTeardown() {
     if (duration) console.log(`  Duration    : ${duration}`);
     console.log(`  Completed at: ${timestamp}`);
     console.log('─────────────────────────────────────────────────────\n');
-}
-
-export default globalTeardown;
+});

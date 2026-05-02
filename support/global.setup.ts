@@ -1,28 +1,8 @@
+import { test as setup } from '@playwright/test';
 import fs from 'fs';
 import { execSync } from 'child_process';
-import dotenv from 'dotenv';
 
-async function globalSetup() {
-    const ENV = process.env.ENV || 'tst';
-    const globalEnvPath = `support/environment/.env.global`;
-    const envPath = `support/environment/.env.${ENV}`;
-
-    // Load global config first (if exists)
-    if (fs.existsSync(globalEnvPath)) {
-        console.log(`Loading global environment file: ${globalEnvPath}`);
-        dotenv.config({ path: globalEnvPath });
-    } else {
-        console.warn(`WARNING! Global environment file not found: ${globalEnvPath}.`);
-    }
-
-    // Then load environment-specific on top (overrides global)
-    if (fs.existsSync(envPath)) {
-        console.log(`Loading environment-specific file: ${envPath}`);
-        dotenv.config({ path: envPath });
-    } else {
-        console.warn(`WARNING! Environment file not found: ${envPath}.`);
-    }
-
+setup('global setup', async () => {
     const userJsonPath = 'tests/.auth/customer.json';
     if (fs.existsSync(userJsonPath)) {
         fs.rmSync(userJsonPath);
@@ -37,9 +17,8 @@ async function globalSetup() {
 
     console.log('Global setup: Starting environment initialization...');
 
-    // Check if Docker is running
     const baseURL = process.env.BASE_URL || 'http://localhost:4200';
-    if (baseURL == 'http://localhost:4200') {
+    if (baseURL === 'http://localhost:4200') {
         try {
             execSync('docker info', { stdio: 'pipe' });
             console.log('Global setup: Docker is running.');
@@ -48,7 +27,6 @@ async function globalSetup() {
         }
     }
 
-    // Check if the website is up, start Docker services if not
     let siteUp: boolean;
     try {
         const response = await fetch(baseURL, { signal: AbortSignal.timeout(5000) });
@@ -57,7 +35,7 @@ async function globalSetup() {
         siteUp = false;
     }
 
-    if (!siteUp && baseURL == 'http://localhost:4200') {
+    if (!siteUp && baseURL === 'http://localhost:4200') {
         console.log(`Global setup: ${baseURL} is not reachable. Starting Docker services...`);
         execSync('docker compose up -d', { stdio: 'inherit' });
         console.log('Global setup: Waiting for services to be ready...');
@@ -66,7 +44,7 @@ async function globalSetup() {
         console.log(`Global setup: ${baseURL} is up.`);
     }
 
-    if (baseURL == 'http://localhost:4200') {
+    if (baseURL === 'http://localhost:4200') {
         console.log('Global setup: Running database migrations and seeds...');
         execSync('docker compose exec laravel-api php artisan migrate:fresh --seed', { stdio: 'inherit' });
     }
@@ -75,7 +53,7 @@ async function globalSetup() {
 
     console.log('Global setup: Initializing database connections...');
     // await DbHelper.initializeConnections();
-}
+});
 
 async function waitForUrl(url: string, timeoutMs: number): Promise<void> {
     const deadline = Date.now() + timeoutMs;
@@ -90,5 +68,3 @@ async function waitForUrl(url: string, timeoutMs: number): Promise<void> {
     }
     throw new Error(`Global setup: ${url} did not become reachable within ${timeoutMs / 1000}s.`);
 }
-
-export default globalSetup;

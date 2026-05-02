@@ -1,4 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import fs from 'fs';
+
+const ENV = process.env.ENV || 'tst';
+const globalEnvPath = 'support/environment/.env.global';
+const envPath = `support/environment/.env.${ENV}`;
+
+if (fs.existsSync(globalEnvPath)) dotenv.config({ path: globalEnvPath });
+if (fs.existsSync(envPath)) dotenv.config({ path: envPath });
 
 export default defineConfig({
     testDir: './tests',
@@ -31,28 +40,30 @@ export default defineConfig({
         /* ❗Run tests headlessly by default on CI, but allow to run tests in headed mode with HEADLESS=false env variable */
         headless: process.env.HEADLESS === 'true' || false,
     },
-    // ❗Runs a setup script once before all tests.
-    //  Typical responsibilities:
-    //     - load environment files
-    //     - prepare auth state
-    //     - start services
-    //     - seed/reset database
-    //     - ensure app is reachable
-    globalSetup: './support/globalSetup.ts',
-    // ❗Runs once after all tests complete.
-    //  Typical responsibilities:
-    //     - clean up resources
-    //     - stop services
-    //     - remove temp files
-    //     - restore state
-    globalTeardown: './support/globalTeardown.ts',
 
     /* Configure projects for major browsers */
     projects: [
-         // ❗Setup project
-         //  Creates a special project that only runs files ending in:
-         //     .setup.ts
-        { name: 'setup', testMatch: /.*\.setup\.ts/ },
+        // ❗Global setup — runs once before all other projects.
+        //  Responsibilities: auth cleanup, Docker check, DB seed.
+        //  Wired to global-teardown via teardown property.
+        {
+            name: 'global-setup',
+            testDir: './support',
+            testMatch: /global\.setup\.ts/,
+            teardown: 'global-teardown',
+        },
+
+        // ❗Global teardown — runs once after all projects complete.
+        //  Responsibilities: auth dir removal, run summary.
+        {
+            name: 'global-teardown',
+            testDir: './support',
+            testMatch: /global\.teardown\.ts/,
+        },
+
+        // ❗Auth setup — creates .auth/customer.json used by chromium project.
+        //  Depends on global-setup so env and DB are ready.
+        { name: 'setup', testMatch: /.*\.setup\.ts/, dependencies: ['global-setup'] },
 
         {
             name: 'chromium',
