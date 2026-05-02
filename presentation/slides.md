@@ -958,12 +958,22 @@ layout: default
   <div class="bg-[#0d1117] border border-yellow-500/30 rounded-xl px-5 py-4">
     <div class="text-xs font-bold text-yellow-400 uppercase tracking-wide mb-2">Fixtures compose</div>
     <div class="text-sm text-gray-400">A fixture can depend on other fixtures. Playwright resolves the full chain — in order, every time.</div>
-    <div class="mt-3 flex items-center gap-2 text-sm">
-      <span class="text-blue-300">page</span>
-      <span class="text-gray-500">→</span>
-      <span class="text-emerald-300">loginPage</span>
-      <span class="text-gray-500">→</span>
-      <span class="text-purple-300">cartPage</span>
+    <div class="mt-3 flex flex-col gap-1 text-sm font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-gray-500">browser</span>
+        <span class="text-gray-600">→</span>
+        <span class="text-blue-300">page</span>
+        <span class="text-gray-600">→</span>
+        <span class="text-emerald-300">loginPage</span>
+      </div>
+      <div class="flex items-center gap-2 ml-[4.5rem]">
+        <span class="text-gray-600">↳</span>
+        <span class="text-purple-300">homePage</span>
+      </div>
+      <div class="flex items-center gap-2 ml-[4.5rem]">
+        <span class="text-gray-600">↳</span>
+        <span class="text-yellow-300">chatPage</span>
+      </div>
     </div>
   </div>
   <div class="bg-[#0d1117] border border-[#30363d] rounded-xl px-5 py-4 text-center">

@@ -23,7 +23,9 @@
     "test:bad": "playwright test bad-",
     "build": "tsc --noEmit",
     "lint": "eslint .",
-    "generate:api": "orval --config orval.config.ts"
+    "generate:api": "orval --config orval.config.ts",
+    "workers:1": "playwright test good- --workers=1",
+    "workers:50%": "playwright test good- --workers=50%"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
