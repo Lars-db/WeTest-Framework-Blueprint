@@ -514,7 +514,7 @@ layout: default
 
 # POM Structure
 
-<div class="grid grid-cols-3 gap-6 mt-8">
+<div class="grid grid-cols-2 gap-6 mt-8">
 
 <div class="bg-[#0d1117] border border-[#30363d] hover:border-[#58a6ff] transition-colors rounded-xl p-6">
   <div class="text-3xl mb-3 text-center">📝</div>
@@ -538,23 +538,11 @@ layout: default
   </div>
 </div>
 
-<div class="bg-[#0d1117] border border-[#30363d] hover:border-[#58a6ff] transition-colors rounded-xl p-6">
-  <div class="text-3xl mb-3 text-center">🔌</div>
-  <div class="font-bold text-center mb-4">Fixtures</div>
-  <div class="text-sm text-gray-400 space-y-2">
-    <div>· Inject page objects into tests</div>
-    <div>· Declare once, use everywhere</div>
-    <div>· Auto teardown after test</div>
-    <div>· Fully typed</div>
-  </div>
-</div>
-
 </div>
 
 <div class="mt-8 text-center text-gray-400">
 The test says <strong class="text-white">"what"</strong> happens. The Page Object knows <strong class="text-white">"how"</strong> to do it.
 </div>
-
 
 ---
 layout: center
