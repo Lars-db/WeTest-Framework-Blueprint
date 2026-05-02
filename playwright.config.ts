@@ -71,7 +71,7 @@ export default defineConfig({
                 ...devices['Desktop Chrome'],
                 // ❗Auth state saved by tests/auth.setup.ts — every test in this
                 // project starts as a logged-in customer. Tests that need a
-                // different role can override with test.use({ storageState }).
+                // different role can be overridden with test.use({ storageState }).
                 storageState: 'tests/.auth/customer.json',
             },
             dependencies: ['auth-setup'],
@@ -83,7 +83,7 @@ export default defineConfig({
                 ...devices['Desktop Firefox'],
                   // ❗Auth state saved by tests/auth.setup.ts — every test in this
                   // project starts as a logged-in customer. Tests that need a
-                  // different role can override with test.use({ storageState }).
+                  // different role can be overridden with test.use({ storageState }).
                 storageState: 'playwright/.auth/user.json',
               },
               dependencies: ['setup'],
