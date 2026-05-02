@@ -63,7 +63,7 @@ export default defineConfig({
 
         // ❗Auth setup — creates .auth/customer.json used by chromium project.
         //  Depends on global-setup so env and DB are ready.
-        { name: 'auth-setup', testMatch: /.*\.setup\.ts/, dependencies: ['global-setup'] },
+        { name: 'auth-setup', testMatch: /auth\.setup\.ts/, dependencies: ['global-setup'] },
 
         {
             name: 'chromium',
