@@ -1574,7 +1574,7 @@ layout: default
     <div class="w-7 h-7 rounded-md bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-sm">🔌</div>
     <div class="font-mono font-bold text-[#ffa657] text-xs">MCP</div>
   </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Model Context Protocol. Gives AI direct access to tools, APIs, and live data — no copy-pasting context, no stale snapshots.</div>
+  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Model Context Protocol. Gives AI direct access to tools, APIs, and live data. No copy-pasting context, no stale snapshots.</div>
   <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">real-time context for AI tooling</div>
 </div>
 
@@ -1583,8 +1583,8 @@ layout: default
     <div class="w-7 h-7 rounded-md bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-sm">🧠</div>
     <div class="font-mono font-bold text-[#58a6ff] text-xs">skills.md</div>
   </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Defines what the agent can do. Reusable task templates, domain knowledge, and capability boundaries.</div>
-  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">scope + capability contract for agents</div>
+  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Reusable task recipes and playbooks. Step-by-step instructions for common tasks: what to create, where to put it, and which patterns to follow.</div>
+  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">reusable task definitions for AI</div>
 </div>
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#3fb950]/30 rounded-xl p-3.5 flex flex-col hover:border-[#3fb950]/60 transition-colors">
@@ -1592,7 +1592,7 @@ layout: default
     <div class="w-7 h-7 rounded-md bg-[#3fb950]/10 border border-[#3fb950]/30 flex items-center justify-center text-sm">⚡</div>
     <div class="font-mono font-bold text-[#3fb950] text-xs">agent.md</div>
   </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Configures agent runtime including autonomy level, tool access, decision rules, and escalation triggers.</div>
+  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Runtime behaviour config. Autonomy level, tool access, confirmation thresholds and escalation rules. How the agent decides and acts.</div>
   <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">runtime behaviour of the AI agent</div>
 </div>
 
@@ -1601,8 +1601,8 @@ layout: default
     <div class="w-7 h-7 rounded-md bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-sm">📋</div>
     <div class="font-mono font-bold text-[#d2a8ff] text-xs">instructions.md</div>
   </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Task-level guidance. How to write a POM, name a fixture, or structure a test file.</div>
-  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">task-level rules AI must follow</div>
+  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Project conventions and constraints. Naming rules, architecture patterns and dos and don'ts. Everything AI needs to generate code that fits your codebase.</div>
+  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">project conventions AI must follow</div>
 </div>
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#e3b341]/30 rounded-xl p-3.5 flex flex-col hover:border-[#e3b341]/60 transition-colors">
