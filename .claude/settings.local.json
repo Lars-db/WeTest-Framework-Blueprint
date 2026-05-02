@@ -1,17 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(npx tsc:*)",
-      "Bash(mv basePage.ts base.page.ts)",
-      "Bash(mv loginPage.ts login.page.ts)",
-      "Bash(mv homePage.ts home.page.ts)",
-      "Bash(mv chatPage.ts chat.page.ts)",
-      "Bash(mv sharedComponents.ts shared.components.ts)",
-      "mcp__MCP_DOCKER__browser_navigate",
-      "Bash(npx playwright *)",
-      "mcp__MCP_DOCKER__browser_snapshot",
-      "Bash(npx node -e ' *)",
-      "Bash(node *)"
-    ]
+    "allow": []
   }
 }
