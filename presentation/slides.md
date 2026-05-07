@@ -1724,7 +1724,7 @@ class: text-center
   <div class="text-gray-500 text-sm font-mono mt-1">Building a Scalable Test Automation Framework in the Age of AI</div>
 </div>
 
-<div class="grid grid-cols-2 gap-8 mt-4 text-left max-w-2xl mx-auto">
+<div class="grid grid-cols-[2fr_1fr_2fr] gap-8 mt-4 text-left max-w-4xl mx-auto">
 
 <div class="relative bg-[#0d1117] border border-[#30363d] hover:border-[#58a6ff] transition-all duration-300 rounded-2xl p-6 group">
   <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#58a6ff]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -1747,6 +1747,13 @@ class: text-center
       <span>Personal website: <code class="text-[#58a6ff]">arcanaops.io</code></span>
     </div>
   </div>
+</div>
+
+<div class="relative bg-[#0d1117] border border-[#30363d] hover:border-[#3fb950] transition-all duration-300 rounded-2xl p-6 group flex flex-col items-center justify-center">
+  <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#3fb950]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  <div class="font-mono text-xs text-gray-500 uppercase tracking-widest mb-3">Framework Blueprint</div>
+  <img src="./QR.png" class="w-28 h-28 rounded-lg" />
+  <div class="font-mono text-[10px] text-gray-600 mt-3">scan to explore</div>
 </div>
 
 <div class="relative bg-[#0d1117] border border-[#30363d] hover:border-[#d2a8ff] transition-all duration-300 rounded-2xl p-6 group">
