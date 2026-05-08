@@ -1788,3 +1788,4 @@ class: text-center
 </div>
 
 <div class="mt-6 text-gray-600 text-xs font-mono">Questions? → find us after the talk</div>
+<div class="mt-6 text-gray-600 text-xs font-mono">Credits for the Toolshop (https://practicesoftwaretesting.com) → Roy de Kleijn</div>
