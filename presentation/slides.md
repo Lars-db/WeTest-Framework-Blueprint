@@ -1789,3 +1789,17 @@ class: text-center
 
 <div class="mt-6 text-gray-600 text-xs font-mono">Questions? → find us after the talk</div>
 <div class="mt-6 text-gray-600 text-xs font-mono">Credits for the Toolshop (https://practicesoftwaretesting.com) → Roy de Kleijn</div>
+
+---
+layout: center
+class: text-center
+---
+
+<div class="flex flex-col items-center justify-center h-full gap-6">
+  <div class="relative bg-[#0d1117] border border-[#3fb950]/40 rounded-2xl p-10 flex flex-col items-center gap-6" style="box-shadow: 0 0 40px rgba(63,185,80,0.1);">
+    <div class="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl" style="background: linear-gradient(90deg, transparent, #3fb950, transparent);"></div>
+    <div class="font-mono text-xs text-[#3fb950]/70 uppercase tracking-widest">Framework Blueprint</div>
+    <img src="./QR.png" class="w-80 h-80 rounded-xl" />
+    <div class="font-mono text-base text-[#58a6ff]">github.com/Lars-db/WeTest-Framework-Blueprint</div>
+  </div>
+</div>
