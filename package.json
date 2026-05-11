@@ -25,7 +25,7 @@
     "lint": "eslint .",
     "generate:api": "orval --config orval.config.ts",
     "workers:1": "playwright test good- --workers=1",
-    "workers:50%": "playwright test good- --workers=50%"
+    "workers:80%": "playwright test good- --workers=80%"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",

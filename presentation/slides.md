@@ -1440,7 +1440,7 @@ layout: default
 
 <div class="text-center text-gray-500 text-sm mb-3 tracking-wide uppercase font-semibold">Test code is production code. It deserves the same respect.</div>
 
-<div class="grid grid-cols-4 gap-3 mt-1">
+<div class="grid grid-cols-3 gap-3 mt-1">
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#58a6ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#58a6ff]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#58a6ff]/10 border border-[#58a6ff]/30 flex items-center justify-center text-xl mb-3">🏗️</div>
@@ -1449,7 +1449,7 @@ layout: default
   <div class="space-y-1.5 w-full text-left mt-3">
     <div class="bg-[#58a6ff]/5 border border-[#58a6ff]/15 rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-[#58a6ff]/60 font-semibold mb-0.5">Use when</div>
-      <div class="text-xs text-gray-300">Test data has many optional fields</div>
+      <div class="text-xs text-gray-300">Test data has many optional fields, but you only need a few</div>
     </div>
     <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
@@ -1474,22 +1474,6 @@ layout: default
   </div>
 </div>
 
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#ffa657]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#ffa657]/60 transition-colors">
-  <div class="w-10 h-10 rounded-xl bg-[#ffa657]/10 border border-[#ffa657]/30 flex items-center justify-center text-xl mb-3">🔀</div>
-  <div class="font-bold text-[#ffa657] mb-1">Strategy</div>
-  <div class="text-xs text-gray-400 leading-relaxed">Swap behavior per environment. Same tests run on tst, acc, prd</div>
-  <div class="space-y-1.5 w-full text-left mt-3">
-    <div class="bg-[#ffa657]/5 border border-[#ffa657]/15 rounded-lg px-2.5 py-1.5">
-      <div class="text-[10px] uppercase tracking-widest text-[#ffa657]/60 font-semibold mb-0.5">Use when</div>
-      <div class="text-xs text-gray-300">Auth or config differs between environments</div>
-    </div>
-    <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
-      <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
-      <div class="text-xs text-gray-400">One test suite, zero environment-specific branches</div>
-    </div>
-  </div>
-</div>
-
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#d2a8ff]/30 rounded-2xl p-4 flex flex-col items-center text-center hover:border-[#d2a8ff]/60 transition-colors">
   <div class="w-10 h-10 rounded-xl bg-[#d2a8ff]/10 border border-[#d2a8ff]/30 flex items-center justify-center text-xl mb-3">🎭</div>
   <div class="font-bold text-[#d2a8ff] mb-1">Facade</div>
@@ -1501,7 +1485,7 @@ layout: default
     </div>
     <div class="bg-white/3 border border-[#30363d] rounded-lg px-2.5 py-1.5">
       <div class="text-[10px] uppercase tracking-widest text-gray-600 font-semibold mb-0.5">Benefit</div>
-      <div class="text-xs text-gray-400">Tests stay clean, complexity stays hidden</div>
+      <div class="text-xs text-gray-400">Tests stay clean and the complexity stays hidden</div>
     </div>
   </div>
 </div>
@@ -1716,7 +1700,7 @@ class: text-center
 
 <div class="flex flex-col items-center gap-2 mb-6">
   <div class="font-mono text-[#3fb950] text-sm tracking-widest uppercase">WeTest Conference 2026 · Athens, Greece 🇬🇷</div>
-  <h1 class="text-5xl font-bold bg-gradient-to-r from-[#58a6ff] via-[#d2a8ff] to-[#3fb950] bg-clip-text text-transparent">Thank You!</h1>
+  <h1 class="text-5xl font-bold bg-gradient-to-r from-[#58a6ff] via-[#d2a8ff] to-[#3fb950] bg-clip-text text-transparent">Σας ευχαριστώ πολύ!</h1>
   <div class="text-gray-500 text-sm font-mono mt-1">Building a Scalable Test Automation Framework in the Age of AI</div>
 </div>
 
