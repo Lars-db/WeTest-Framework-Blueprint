@@ -1605,13 +1605,9 @@ layout: default
   <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">project conventions AI must follow</div>
 </div>
 
-<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#e3b341]/30 rounded-xl p-3.5 flex flex-col hover:border-[#e3b341]/60 transition-colors">
-  <div class="flex items-center gap-2 mb-2">
-    <div class="w-7 h-7 rounded-md bg-[#e3b341]/10 border border-[#e3b341]/30 flex items-center justify-center text-sm">⚙️</div>
-    <div class="font-mono font-bold text-[#e3b341] text-xs">apm.yml</div>
-  </div>
-  <div class="text-[11px] text-gray-400 leading-relaxed flex-1">Agent Package Manager manifest. Declares skills, plugins, and instructions so every dev gets the same reproducible agent setup.</div>
-  <div class="mt-2 pt-2 border-t border-[#30363d] text-[9px] text-gray-600 font-mono">npm install, but for AI agents</div>
+<div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#e3b341]/20 rounded-xl p-3.5 flex flex-col items-center justify-center text-center">
+  <div class="text-5xl mb-3">🤖</div>
+  <div class="text-[10px] text-gray-600 font-mono tracking-wider uppercase">AI context loaded</div>
 </div>
 
 <div class="bg-gradient-to-b from-[#161b22] to-[#0d1117] border border-[#f78166]/30 rounded-xl p-3.5 flex flex-col hover:border-[#f78166]/60 transition-colors">
