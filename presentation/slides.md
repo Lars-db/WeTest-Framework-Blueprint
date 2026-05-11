@@ -252,7 +252,7 @@ layout: center
 <div class="relative rounded-xl p-4 text-center overflow-hidden" style="background: linear-gradient(145deg, #0d1117 60%, rgba(251,191,36,0.09)); border: 1px solid rgba(251,191,36,0.45); box-shadow: 0 0 20px rgba(251,191,36,0.1);">
   <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #fbbf24, transparent);"></div>
   <div class="text-2xl mb-2">🤖</div>
-  <div class="text-xs font-mono font-semibold text-yellow-300 leading-tight">AI Tips<br>&amp; Agents</div>
+  <div class="text-xs font-mono font-semibold text-yellow-300 leading-tight">AI Tips<br>&amp; Tricks</div>
   <div class="mt-2 text-[10px] font-mono font-bold text-yellow-400 bg-yellow-400/10 rounded px-1 inline-block">#10</div>
 </div>
 
@@ -1551,7 +1551,7 @@ layout: center
 layout: section
 ---
 
-<div class="font-mono text-[#3fb950] text-sm mb-4">$ cat CLAUDE.md | grep -i "pattern\|fixture\|page-object"</div>
+<div class="font-mono text-[#3fb950] text-sm mb-4">$ cat agent.md | grep -i "pattern\|fixture\|page-object"</div>
 
 # 🤖 AI Tips & Tricks
 
@@ -1675,7 +1675,7 @@ layout: default
   </div>
   <div class="flex gap-3 items-start p-3 rounded-lg" style="background: rgba(251,191,36,0.07); border: 1px solid rgba(251,191,36,0.3);">
     <span class="text-lg shrink-0">📄</span>
-    <div><strong class="text-yellow-300">CLAUDE.md</strong><br><span class="text-gray-400 text-xs">AI follows your rules by default</span></div>
+    <div><strong class="text-yellow-300">AI .md files</strong><br><span class="text-gray-400 text-xs">AI follows your rules by default</span></div>
   </div>
 
 </div>
