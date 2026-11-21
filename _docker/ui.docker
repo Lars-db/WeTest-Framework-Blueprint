@@ -5,7 +5,7 @@ RUN apk update && \
     apk add bash && \
     npm install -g npm@10.9.2
 
-RUN npm install -g @angular/cli@latest
+RUN npm install -g @angular/cli@19
 
 WORKDIR /app
 
